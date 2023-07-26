@@ -8,10 +8,12 @@ export class DialogComponent implements AfterViewInit {
   @Input() isOpen = true;
   @ViewChild('closeButton', {static: false}) closeButton!: ElementRef;
   @Output() closeEvent = new EventEmitter<void>();
+  @Output() openEvent = new EventEmitter<void>();
   ngAfterViewInit(): void {
     if(this.isOpen) {
       this.closeButton.nativeElement.focus();
       this.captureFocus();
+      this.openEvent.emit()
     }
   }
   close() {
