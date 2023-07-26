@@ -1,11 +1,11 @@
-<button #open (click)="toggleDialog()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add Delivery Address</button>
+<!--<button #open (click)="closeButton()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add Delivery Address</button>-->
 
-<div *ngIf="isOpen" class="fixed inset-0 z-0 bg-black bg-opacity-50" tabindex="-1" (click)="toggleDialog()"></div>
+<div *ngIf="isOpen" class="fixed inset-0 z-0 bg-black bg-opacity-50" tabindex="-1" (click)="close()"></div>
 
 <div *ngIf="isOpen" id="dialog_layer" class="dialogs" (keydown)="action($event)">
   <div role="dialog" id="dialog1" aria-labelledby="dialog1_label" aria-modal="true" [ngClass]="{'hidden': !isOpen}">
     <div class="flex justify-end">
-      <button #close (click)="toggleDialog()">x</button>
+      <button #closeButton (click)="close()">x</button>
     </div>
     <ng-content select="[header]"></ng-content>
     <ng-content select="[body]"></ng-content>

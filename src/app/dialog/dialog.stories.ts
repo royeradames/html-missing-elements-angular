@@ -11,11 +11,14 @@ const meta: Meta<DialogComponent> = {
       ...args,
     },
     template: `
-    <app-dialog>
-      <div header>Some content</div>
-      <div body><p>Some more content</p><button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Button that clicks</button></div>
-    </app-dialog>
-  `,
+      <app-dialog [isOpen]="isOpen" closeEvent="action()">
+        <div header>Some content</div>
+        <div body>
+          <p>Some more content</p>
+          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Button that clicks</button>
+        </div>
+      </app-dialog>
+    `,
   }),
 };
 
@@ -24,4 +27,7 @@ type Story = StoryObj<DialogComponent>;
 
 // More on writing stories with args: https://storybook.js.org/docs/angular/writing-stories/args
 export const Primary: Story = {
+  args: {
+    isOpen: true,
+  },
 };
