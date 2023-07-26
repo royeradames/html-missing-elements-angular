@@ -10,6 +10,12 @@ const meta: Meta<DialogComponent> = {
     props: {
       ...args,
     },
+    template: `
+    <app-dialog>
+      <div header>Some content</div>
+      <div body><p>Some more content</p><button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Button that clicks</button></div>
+    </app-dialog>
+  `,
   }),
 };
 
