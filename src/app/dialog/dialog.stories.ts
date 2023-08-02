@@ -11,7 +11,7 @@ const meta: Meta<DialogComponent> = {
       ...args,
     },
     template: `
-      <app-dialog [isOpen]="isOpen" closeEvent="action()">
+      <app-dialog [isOpen]="isOpen">
         <div header>Some content</div>
         <div body>
           <p>Some more content</p>
