@@ -1,10 +1,11 @@
 import {
-  AfterViewChecked,
+  AfterContentChecked,
   AfterViewInit,
   Component,
   ElementRef,
   EventEmitter,
   Input,
+  OnDestroy,
   Output,
   ViewChild
 } from '@angular/core';
@@ -12,13 +13,15 @@ import {
 @Component({
   selector: 'app-dialog', templateUrl: './dialog.component.html', styleUrls: ['./dialog.component.css']
 })
-export class DialogComponent implements AfterViewInit, AfterViewChecked {
+export class DialogComponent implements AfterViewInit, AfterContentChecked, OnDestroy {
+
   firstFocusableElement!: HTMLElement
   lastFocusableElement!: HTMLElement
   @Input() isOpen = true;
   @ViewChild('closeButton', {static: false}) closeButton!: ElementRef;
   @Output() closeEvent = new EventEmitter<void>();
   @Output() openEvent = new EventEmitter<void>();
+  eventFunction = this.captureTabbing.bind(this)
 
   get focusableElements(): NodeListOf<HTMLElement> {
     return document.querySelectorAll('a[href], button, textarea, input[type="text"], input[type="radio"], input[type="checkbox"], select') as NodeListOf<HTMLElement>;
@@ -33,14 +36,15 @@ export class DialogComponent implements AfterViewInit, AfterViewChecked {
   }
 
   ngAfterViewInit(): void {
-    this.captureFocus();
-  }
-
-  ngAfterViewChecked(): void {
     if (!this.isOpen) return;
     this.closeButton.nativeElement.focus();
     this.captureFocus();
     this.openEvent.emit()
+  }
+
+  ngAfterContentChecked(): void {
+    if (!this.isOpen) return;
+    this.lastFocusableElement = this.getLastFocusableElement();
   }
 
   close() {
@@ -48,7 +52,7 @@ export class DialogComponent implements AfterViewInit, AfterViewChecked {
     this.closeEvent.emit();
   }
 
-  closeByKeyboard(e: KeyboardEvent) {
+  closeOnEscape(e: KeyboardEvent) {
     const isEscPressed = e.key === 'Escape' || e.keyCode === 27;
     if (!isEscPressed) return;
     this.close();
@@ -62,7 +66,7 @@ export class DialogComponent implements AfterViewInit, AfterViewChecked {
   captureFocus() {
     this.firstFocusableElement = this.closeButton.nativeElement;
     this.lastFocusableElement = this.getLastFocusableElement();
-    document.addEventListener('keydown', this.captureTabbing);
+    document.addEventListener('keydown', this.eventFunction);
   }
 
   isTabPressed(e: KeyboardEvent): boolean {
@@ -71,7 +75,7 @@ export class DialogComponent implements AfterViewInit, AfterViewChecked {
   }
 
   captureTabbing(e: KeyboardEvent) {
-    if (!this.isTabPressed) return;
+    if (!this.isTabPressed(e)) return;
     if (e.shiftKey && this.isFirstFocusableElementFocused) {
       e.preventDefault();
       this.lastFocusableElement.focus();
@@ -80,5 +84,9 @@ export class DialogComponent implements AfterViewInit, AfterViewChecked {
     if (!this.isLastFocusableElementFocused) return;
     e.preventDefault();
     this.firstFocusableElement.focus();
+  }
+
+  ngOnDestroy(): void {
+    document.removeEventListener('keydown', this.eventFunction);
   }
 }
