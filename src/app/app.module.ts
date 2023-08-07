@@ -1,15 +1,14 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-
-import { AppComponent } from './app.component';
-import { DialogComponent } from './dialog/dialog.component';
-import { ButtonComponent } from './button/button.component';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {AppComponent} from './app.component';
+import {DialogComponent} from './dialog/dialog.component';
+import {ButtonComponent} from './button/button.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DialogComponent,
-    ButtonComponent
+    ButtonComponent,
   ],
   imports: [
     BrowserModule
@@ -17,4 +16,5 @@ import { ButtonComponent } from './button/button.component';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
