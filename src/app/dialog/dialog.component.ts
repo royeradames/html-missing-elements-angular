@@ -8,6 +8,7 @@ export class DialogComponent implements AfterViewInit, OnDestroy {
   firstFocusableElement!: HTMLElement
   lastFocusableElement!: HTMLElement
   @Input() previousFocusElement: HTMLElement | null = null;
+  @Input() isCloseOnBackgroundClick = true;
   @ViewChild('closeButton', {static: false}) closeButton!: ElementRef;
   @ViewChild('dialog', {static: false}) dialog!: ElementRef;
   @Output() onClose = new EventEmitter<void>();
@@ -67,6 +68,11 @@ export class DialogComponent implements AfterViewInit, OnDestroy {
   close() {
     this.previousFocusElement?.focus();
     this.onClose.emit();
+  }
+
+  backgroundClose(){
+    if(!this.isCloseOnBackgroundClick) return;
+    this.close();
   }
 
   closeOnEscape(e: KeyboardEvent) {

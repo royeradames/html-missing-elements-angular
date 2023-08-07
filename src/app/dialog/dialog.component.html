@@ -1,9 +1,9 @@
-<div class="fixed inset-0 -z-10 bg-black bg-opacity-50" tabindex="-1" (click)="close()"></div>
+<div class="fixed inset-0 -z-10 bg-black bg-opacity-50" tabindex="-1" (click)="backgroundClose()"></div>
 
 <div id="dialog_layer" class="dialogs" (keydown)="closeOnEscape($event)">
   <div #dialog role="dialog" id="dialog" aria-labelledby="dialog1_label" aria-modal="true">
     <div class="flex justify-end">
-      <button #closeButton (click)="close()">x</button>
+      <button #closeButton (click)="close()"><span class="sr-only">Close dialog</span>x</button>
     </div>
     <ng-content select="[header]"></ng-content>
     <ng-content select="[body]"></ng-content>
