@@ -75,3 +75,33 @@ export const OpenWithButton: Story = {
     `,
   }),
 };
+
+export const DialogUpdates: Story = {
+  args: {
+  },
+  render: (args: DialogComponent) => ({
+    props: {
+      ...args,
+      isOpen: true,
+      updateDialog: false,
+    },
+    template: `
+      <button #button (click)="isOpen = !isOpen" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Toggle
+      Dialog
+    </button>
+      <app-dialog *ngIf="isOpen" [previousFocusElement]="button" (onClose)="isOpen = false">
+        <div header *ngIf="!updateDialog">Some content</div>
+        <div body *ngIf="!updateDialog">
+          <p>Some more content</p>
+          <button (click)="updateDialog = true" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Activate changes</button>
+        </div>
+
+        <div header *ngIf="updateDialog">Secondary Content Updated</div>
+        <div body *ngIf="updateDialog">
+          <p>Updated content</p>
+          <button (click)="updateDialog = false" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Revert Changes</button>
+        </div>
+      </app-dialog>
+    `,
+  }),
+};
