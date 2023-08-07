@@ -1,7 +1,9 @@
 <div class="fixed inset-0 z-0 bg-black bg-opacity-50" tabindex="-1" (click)="backgroundClose()"></div>
 
+<div aria-live="polite" class="sr-only">Dialog opened. Press escape to close.</div>
+
 <div id="dialog_layer" class="dialogs" (keydown)="closeOnEscape($event)">
-  <div #dialog role="dialog" id="dialog" aria-labelledby="dialog1_label" aria-modal="true">
+  <div #dialog role="dialog" id="dialog" [attr.aria-label]="label" aria-modal="true">
     <div class="flex justify-end">
       <button #closeButton (click)="close()"><span class="sr-only">Close dialog</span>x</button>
     </div>

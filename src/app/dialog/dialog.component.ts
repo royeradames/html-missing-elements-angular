@@ -5,15 +5,16 @@ import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, Ou
 })
 export class DialogComponent implements AfterViewInit, OnDestroy {
 
-  firstFocusableElement!: HTMLElement
-  lastFocusableElement!: HTMLElement
   @Input() previousFocusElement: HTMLElement | null = null;
+  @Input() label = 'Dialog';
   @Input() isCloseOnBackgroundClick = true;
   @ViewChild('closeButton', {static: false}) closeButton!: ElementRef;
   @ViewChild('dialog', {static: false}) dialog!: ElementRef;
   @Output() onClose = new EventEmitter<void>();
   @Output() onOpen = new EventEmitter<void>();
   eventFunction = this.captureTabbing.bind(this)
+  firstFocusableElement!: HTMLElement
+  lastFocusableElement!: HTMLElement
   private contentObserver?: MutationObserver;
 
   get focusableElements(): NodeListOf<HTMLElement> {
@@ -55,6 +56,7 @@ export class DialogComponent implements AfterViewInit, OnDestroy {
       break;
     }
   }
+
   handleContentChange() {
     this.updateLastFocusableElement();
     this.firstFocusableElement.focus();
@@ -70,8 +72,8 @@ export class DialogComponent implements AfterViewInit, OnDestroy {
     this.onClose.emit();
   }
 
-  backgroundClose(){
-    if(!this.isCloseOnBackgroundClick) return;
+  backgroundClose() {
+    if (!this.isCloseOnBackgroundClick) return;
     this.close();
   }
 
