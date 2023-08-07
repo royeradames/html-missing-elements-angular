@@ -11,7 +11,7 @@ const meta: Meta<DialogComponent> = {
       ...args,
     },
     template: `
-      <app-dialog [isOpen]="isOpen">
+      <app-dialog>
         <div header>Some content</div>
         <div body>
           <p>Some more content</p>
@@ -28,6 +28,5 @@ type Story = StoryObj<DialogComponent>;
 // More on writing stories with args: https://storybook.js.org/docs/angular/writing-stories/args
 export const Primary: Story = {
   args: {
-    isOpen: true,
   },
 };
