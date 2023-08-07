@@ -31,7 +31,7 @@ export const Default: Story = {
     `,
   }),
 };
-export const DialogButtonClose: Story = {
+export const CloseWithButton: Story = {
   args: {
   },
   render: (args: DialogComponent) => ({
@@ -53,7 +53,7 @@ export const DialogButtonClose: Story = {
     `,
   }),
 };
-export const DialogButtonOpen: Story = {
+export const OpenWithButton: Story = {
   args: {
   },
   render: (args: DialogComponent) => ({
