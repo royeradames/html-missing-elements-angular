@@ -9,9 +9,11 @@ export class DialogComponent implements AfterViewInit, OnDestroy {
   lastFocusableElement!: HTMLElement
   @Input() previousFocusElement: HTMLElement | null = null;
   @ViewChild('closeButton', {static: false}) closeButton!: ElementRef;
+  @ViewChild('dialog', {static: false}) dialog!: ElementRef;
   @Output() onClose = new EventEmitter<void>();
   @Output() onOpen = new EventEmitter<void>();
   eventFunction = this.captureTabbing.bind(this)
+  private contentObserver?: MutationObserver;
 
   get focusableElements(): NodeListOf<HTMLElement> {
     return document.querySelectorAll('a[href], button, textarea, input[type="text"], input[type="radio"], input[type="checkbox"], select') as NodeListOf<HTMLElement>;
@@ -27,6 +29,7 @@ export class DialogComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     this.open();
+    this.observeContentChanges();
   }
 
   open() {
@@ -34,6 +37,28 @@ export class DialogComponent implements AfterViewInit, OnDestroy {
     this.captureFocus();
     this.onOpen.emit()
   }
+
+  observeContentChanges() {
+    this.contentObserver = new MutationObserver((mutations) => this.onContentChange(mutations));
+
+    this.contentObserver.observe(this.dialog.nativeElement, {
+      attributes: false, childList: true, subtree: true
+    });
+  }
+
+  onContentChange(mutations: MutationRecord[]) {
+    for (let mutation of mutations) {
+      const isContentUpdated = mutation.type === 'childList';
+      if (!isContentUpdated) continue;
+      this.handleContentChange();
+      break;
+    }
+  }
+  handleContentChange() {
+    this.updateLastFocusableElement();
+    this.firstFocusableElement.focus();
+  }
+
 
   updateLastFocusableElement() {
     this.lastFocusableElement = this.getLastFocusableElement();
@@ -80,5 +105,6 @@ export class DialogComponent implements AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     document.removeEventListener('keydown', this.eventFunction);
+    this.contentObserver?.disconnect()
   }
 }
