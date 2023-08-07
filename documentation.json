@@ -254,7 +254,7 @@
         },
         {
             "name": "DialogComponent",
-            "id": "component-DialogComponent-7c883f9a3ed5e4b8c64ae2ff4a147e3bc602200cb4659e25a012a1c755da6ac3cba61079e00fd637e2d28150f3eba137a4fbe877958eab162314eb45958904fa",
+            "id": "component-DialogComponent-bde765bda7a17e9c6114a2ae375eb6ab981a0ab58ad20cc6d75da170b99a0d5bb3ff3d29fb8cd51c76efdd46fc5d608e04f7d5a754d7030b3500df6d9d34141b",
             "file": "src/app/dialog/dialog.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -273,30 +273,29 @@
             "hostDirectives": [],
             "inputsClass": [
                 {
-                    "name": "isOpen",
-                    "defaultValue": "true",
+                    "name": "previousFocusElement",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 18,
-                    "type": "boolean",
+                    "line": 10,
+                    "type": "HTMLElement",
                     "decorators": []
                 }
             ],
             "outputsClass": [
                 {
-                    "name": "closeEvent",
+                    "name": "onClose",
                     "defaultValue": "new EventEmitter<void>()",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 20,
+                    "line": 12,
                     "type": "EventEmitter"
                 },
                 {
-                    "name": "openEvent",
+                    "name": "onOpen",
                     "defaultValue": "new EventEmitter<void>()",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 21,
+                    "line": 13,
                     "type": "EventEmitter"
                 }
             ],
@@ -308,7 +307,7 @@
                     "type": "ElementRef",
                     "optional": false,
                     "description": "",
-                    "line": 19,
+                    "line": 11,
                     "decorators": [
                         {
                             "name": "ViewChild",
@@ -318,11 +317,49 @@
                     "modifierKind": [
                         167
                     ]
+                },
+                {
+                    "name": "eventFunction",
+                    "defaultValue": "this.captureTabbing.bind(this)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 14
+                },
+                {
+                    "name": "firstFocusableElement",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "HTMLElement",
+                    "optional": false,
+                    "description": "",
+                    "line": 8
+                },
+                {
+                    "name": "lastFocusableElement",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "HTMLElement",
+                    "optional": false,
+                    "description": "",
+                    "line": 9
                 }
             ],
             "methodsClass": [
                 {
-                    "name": "action",
+                    "name": "captureFocus",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 58,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "captureTabbing",
                     "args": [
                         {
                             "name": "e",
@@ -334,7 +371,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 39,
+                    "line": 69,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -347,19 +384,6 @@
                                 "text": "param"
                             }
                         }
-                    ]
-                },
-                {
-                    "name": "captureFocus",
-                    "args": [],
-                    "optional": false,
-                    "returnType": "void",
-                    "typeParameters": [],
-                    "line": 45,
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "modifierKind": [
-                        121
                     ]
                 },
                 {
@@ -368,12 +392,12 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 34,
+                    "line": 42,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
                 {
-                    "name": "handleTabbing",
+                    "name": "closeOnEscape",
                     "args": [
                         {
                             "name": "e",
@@ -385,12 +409,9 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 53,
+                    "line": 47,
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "modifierKind": [
-                        121
-                    ],
                     "jsdoctags": [
                         {
                             "name": "e",
@@ -404,14 +425,42 @@
                     ]
                 },
                 {
-                    "name": "ngAfterViewChecked",
+                    "name": "getLastFocusableElement",
                     "args": [],
                     "optional": false,
-                    "returnType": "void",
+                    "returnType": "HTMLElement",
                     "typeParameters": [],
-                    "line": 31,
+                    "line": 53,
                     "deprecated": false,
                     "deprecationMessage": ""
+                },
+                {
+                    "name": "isTabPressed",
+                    "args": [
+                        {
+                            "name": "e",
+                            "type": "KeyboardEvent",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "boolean",
+                    "typeParameters": [],
+                    "line": 64,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "e",
+                            "type": "KeyboardEvent",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
                 },
                 {
                     "name": "ngAfterViewInit",
@@ -419,7 +468,17 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 22,
+                    "line": 28,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "ngOnDestroy",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 81,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -429,12 +488,19 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 25,
+                    "line": 32,
                     "deprecated": false,
-                    "deprecationMessage": "",
-                    "modifierKind": [
-                        121
-                    ]
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "updateLastFocusableElement",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 38,
+                    "deprecated": false,
+                    "deprecationMessage": ""
                 }
             ],
             "deprecated": false,
@@ -446,7 +512,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import {\n  AfterViewChecked,\n  AfterViewInit,\n  Component,\n  ElementRef,\n  EventEmitter,\n  Input,\n  OnInit,\n  Output,\n  ViewChild\n} from '@angular/core';\n\n@Component({\n  selector: 'app-dialog', templateUrl: './dialog.component.html', styleUrls: ['./dialog.component.css']\n})\nexport class DialogComponent implements AfterViewInit, AfterViewChecked {\n\n  @Input() isOpen = true;\n  @ViewChild('closeButton', {static: false}) closeButton!: ElementRef;\n  @Output() closeEvent = new EventEmitter<void>();\n  @Output() openEvent = new EventEmitter<void>();\n  ngAfterViewInit(): void {\n   this.open();\n  }\n  private open(){\n    if(!this.isOpen) return;\n    this.closeButton.nativeElement.focus();\n    this.captureFocus();\n    this.openEvent.emit()\n  }\n  ngAfterViewChecked(): void {\n    this.open();\n  }\n  close() {\n    this.isOpen = false;\n    this.closeEvent.emit();\n  }\n\n  action(e: KeyboardEvent) {\n    if (e.keyCode === 27 || e.key === 'Escape') {\n      this.isOpen = false;\n    }\n  }\n\n  private captureFocus() {\n    const focusableElements = document.querySelectorAll('a[href], button, textarea, input[type=\"text\"], input[type=\"radio\"], input[type=\"checkbox\"], select');\n    const firstFocusableElement = this.closeButton.nativeElement as HTMLElement;\n    const lastFocusableElement = focusableElements[focusableElements.length - 1] as HTMLElement;\n\n    document.addEventListener('keydown', (e: KeyboardEvent) => this.handleTabbing(e));\n  }\n\n  private handleTabbing(e: KeyboardEvent){\n    const KEYCODE_TAB = 9;\n    const isTabPressed = e.key === 'Tab' || e.keyCode === KEYCODE_TAB;\n\n    if (!isTabPressed) {\n      return;\n    }\n\n    // if (e.shiftKey) {\n    //   if (document.activeElement === firstFocusableElement) {\n    //     lastFocusableElement.focus();\n    //     e.preventDefault();\n    //   }\n    // } else {\n    //   if (document.activeElement === lastFocusableElement) {\n    //     firstFocusableElement.focus();\n    //     e.preventDefault();\n    //   }\n    // }\n  }\n}\n",
+            "sourceCode": "import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, Output, ViewChild} from '@angular/core';\n\n@Component({\n  selector: 'app-dialog', templateUrl: './dialog.component.html', styleUrls: ['./dialog.component.css']\n})\nexport class DialogComponent implements AfterViewInit, OnDestroy {\n\n  firstFocusableElement!: HTMLElement\n  lastFocusableElement!: HTMLElement\n  @Input() previousFocusElement!: HTMLElement;\n  @ViewChild('closeButton', {static: false}) closeButton!: ElementRef;\n  @Output() onClose = new EventEmitter<void>();\n  @Output() onOpen = new EventEmitter<void>();\n  eventFunction = this.captureTabbing.bind(this)\n\n  get focusableElements(): NodeListOf<HTMLElement> {\n    return document.querySelectorAll('a[href], button, textarea, input[type=\"text\"], input[type=\"radio\"], input[type=\"checkbox\"], select') as NodeListOf<HTMLElement>;\n  }\n\n  get isFirstFocusableElementFocused(): boolean {\n    return document.activeElement === this.closeButton.nativeElement;\n  }\n\n  get isLastFocusableElementFocused(): boolean {\n    return document.activeElement === this.lastFocusableElement;\n  }\n\n  ngAfterViewInit(): void {\n    this.open();\n  }\n\n  open() {\n    this.closeButton.nativeElement.focus();\n    this.captureFocus();\n    this.onOpen.emit()\n  }\n\n  updateLastFocusableElement() {\n    this.lastFocusableElement = this.getLastFocusableElement();\n  }\n\n  close() {\n    this.previousFocusElement.focus();\n    this.onClose.emit();\n  }\n\n  closeOnEscape(e: KeyboardEvent) {\n    const isEscPressed = e.key === 'Escape' || e.keyCode === 27;\n    if (!isEscPressed) return;\n    this.close();\n  }\n\n  getLastFocusableElement(): HTMLElement {\n    const focusableElements = this.focusableElements\n    return focusableElements[focusableElements.length - 1];\n  }\n\n  captureFocus() {\n    this.firstFocusableElement = this.closeButton.nativeElement;\n    this.lastFocusableElement = this.getLastFocusableElement();\n    document.addEventListener('keydown', this.eventFunction);\n  }\n\n  isTabPressed(e: KeyboardEvent): boolean {\n    const KEYCODE_TAB = 9;\n    return e.key === 'Tab' || e.keyCode === KEYCODE_TAB;\n  }\n\n  captureTabbing(e: KeyboardEvent) {\n    if (!this.isTabPressed(e)) return;\n    if (e.shiftKey && this.isFirstFocusableElementFocused) {\n      e.preventDefault();\n      this.lastFocusableElement.focus();\n      return;\n    }\n    if (!this.isLastFocusableElementFocused) return;\n    e.preventDefault();\n    this.firstFocusableElement.focus();\n  }\n\n  ngOnDestroy(): void {\n    document.removeEventListener('keydown', this.eventFunction);\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -457,9 +523,82 @@
             "stylesData": "",
             "implements": [
                 "AfterViewInit",
-                "AfterViewChecked"
+                "OnDestroy"
             ],
-            "templateData": "<!--<button #open (click)=\"closeButton()\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Add Delivery Address</button>-->\n\n<div *ngIf=\"isOpen\" class=\"fixed inset-0 z-0 bg-black bg-opacity-50\" tabindex=\"-1\" (click)=\"close()\"></div>\n\n<div *ngIf=\"isOpen\" id=\"dialog_layer\" class=\"dialogs\" (keydown)=\"action($event)\">\n  <div role=\"dialog\" id=\"dialog1\" aria-labelledby=\"dialog1_label\" aria-modal=\"true\" [ngClass]=\"{'hidden': !isOpen}\">\n    <div class=\"flex justify-end\">\n      <button #closeButton (click)=\"close()\">x</button>\n    </div>\n    <ng-content select=\"[header]\"></ng-content>\n    <ng-content select=\"[body]\"></ng-content>\n    <ng-content select=\"[footer]\"></ng-content>\n  </div>\n</div>\n"
+            "accessors": {
+                "focusableElements": {
+                    "name": "focusableElements",
+                    "getSignature": {
+                        "name": "focusableElements",
+                        "type": "",
+                        "returnType": "NodeListOf<HTMLElement>",
+                        "line": 16
+                    }
+                },
+                "isFirstFocusableElementFocused": {
+                    "name": "isFirstFocusableElementFocused",
+                    "getSignature": {
+                        "name": "isFirstFocusableElementFocused",
+                        "type": "boolean",
+                        "returnType": "boolean",
+                        "line": 20
+                    }
+                },
+                "isLastFocusableElementFocused": {
+                    "name": "isLastFocusableElementFocused",
+                    "getSignature": {
+                        "name": "isLastFocusableElementFocused",
+                        "type": "boolean",
+                        "returnType": "boolean",
+                        "line": 24
+                    }
+                }
+            },
+            "templateData": "<div class=\"fixed inset-0 -z-10 bg-black bg-opacity-50\" tabindex=\"-1\" (click)=\"close()\"></div>\n\n<div id=\"dialog_layer\" class=\"dialogs\" (keydown)=\"closeOnEscape($event)\">\n  <div role=\"dialog\" id=\"dialog\" aria-labelledby=\"dialog1_label\" aria-modal=\"true\">\n    <div class=\"flex justify-end\">\n      <button #closeButton (click)=\"close()\">x</button>\n    </div>\n    <ng-content select=\"[header]\"></ng-content>\n    <ng-content select=\"[body]\"></ng-content>\n    <ng-content select=\"[footer]\"></ng-content>\n  </div>\n</div>\n"
+        },
+        {
+            "name": "DialogWrapperComponent",
+            "id": "component-DialogWrapperComponent-0daad6a9787c9442f0f57420d5a2a0218fe9564bd599335e2958b4d19966de9a5f98209f222b5c2e3646e4cb56721e144080b6749edd71d7288217edf23f2f83",
+            "file": "src/app/dialog/dialog.stories.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "app-dialog-wrapper",
+            "styleUrls": [],
+            "styles": [],
+            "template": "<button #button (click)=\"isOpen = !isOpen\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Toggle\n  Dialog\n</button>\n<app-dialog *ngIf=\"isOpen\" [previousFocusElement]=\"button\" (onClose)=\"isOpen = false\">\n  <ng-content></ng-content>\n</app-dialog>\n",
+            "templateUrl": [],
+            "viewProviders": [],
+            "hostDirectives": [],
+            "inputsClass": [
+                {
+                    "name": "isOpen",
+                    "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 19,
+                    "type": "boolean",
+                    "decorators": []
+                }
+            ],
+            "outputsClass": [],
+            "propertiesClass": [],
+            "methodsClass": [],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "standalone": false,
+            "imports": [],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import {DialogComponent} from \"./dialog.component\";\nimport type {Meta, StoryObj} from '@storybook/angular';\nimport {Component, Input} from '@angular/core';\nimport {moduleMetadata} from \"@storybook/angular\";\nimport {CommonModule} from \"@angular/common\";\n\n@Component({\n  selector: 'app-dialog-wrapper',\n  template: `\n    <button #button (click)=\"isOpen = !isOpen\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Toggle\n      Dialog\n    </button>\n    <app-dialog *ngIf=\"isOpen\" [previousFocusElement]=\"button\" (onClose)=\"isOpen = false\">\n      <ng-content></ng-content>\n    </app-dialog>\n  `\n})\nexport class DialogWrapperComponent {\n  @Input() isOpen = false;\n}\n\nconst meta: Meta<DialogWrapperComponent> = {\n  title: 'Components/Dialog',\n  component: DialogWrapperComponent,\n  tags: ['autodocs']\n};\n\nexport default meta;\ntype Story = StoryObj<DialogWrapperComponent>;\n\nexport const Open: Story = {\n  args: {\n    isOpen: true\n  },\n  decorators: [\n    moduleMetadata({\n      declarations: [DialogComponent],\n      imports: [CommonModule]\n    })\n  ],\n  render: args => ({\n    template: `\n      <app-dialog-wrapper [isOpen]=\"args.isOpen\">\n        <div header>Some content</div>\n        <div body>\n          <p>Some more content</p>\n          <button class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Button that clicks</button>\n        </div>\n      </app-dialog-wrapper>\n    `,\n    props: args\n  })\n};\n\nexport const Close: Story = {\n  args: {\n    isOpen: false\n  },\n  decorators: [\n    moduleMetadata({\n      declarations: [DialogComponent],\n      imports: [CommonModule]\n    })\n  ],\n  render: args => ({\n    template: `\n      <app-dialog-wrapper [isOpen]=\"args.isOpen\">\n        <div header>Some content</div>\n        <div body>\n          <p>Some more content</p>\n          <button class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Button that clicks</button>\n        </div>\n      </app-dialog-wrapper>\n    `,\n    props: args\n  })\n};\n",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": ""
         },
         {
             "name": "HeaderComponent",
@@ -624,13 +763,13 @@
     "modules": [
         {
             "name": "AppModule",
-            "id": "module-AppModule-7e9c4bd3318338324e2bde7154e938e7458e39ac85be6ae6fff0ffd1c1cf61e913acbd07afeb409c5b2ce048915c90514afb1ba5c7459e52cd89a1f8aa9b4032",
+            "id": "module-AppModule-c448551eb26a2767b8426202cabd1e1c1938f46704c77388a556942f86e97e8f909499e27d99f787cd4cd01ce5f97a2ca6cbed3f9f3101fc83dae79e68cf27b7",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "src/app/app.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\nimport { BrowserModule } from '@angular/platform-browser';\n\nimport { AppComponent } from './app.component';\nimport { DialogComponent } from './dialog/dialog.component';\nimport { ButtonComponent } from './button/button.component';\n\n@NgModule({\n  declarations: [\n    AppComponent,\n    DialogComponent,\n    ButtonComponent\n  ],\n  imports: [\n    BrowserModule\n  ],\n  providers: [],\n  bootstrap: [AppComponent]\n})\nexport class AppModule { }\n",
+            "sourceCode": "import {NgModule} from '@angular/core';\nimport {BrowserModule} from '@angular/platform-browser';\nimport {AppComponent} from './app.component';\nimport {DialogComponent} from './dialog/dialog.component';\nimport {ButtonComponent} from './button/button.component';\n\n@NgModule({\n  declarations: [\n    AppComponent,\n    DialogComponent,\n    ButtonComponent,\n  ],\n  imports: [\n    BrowserModule\n  ],\n  providers: [],\n  bootstrap: [AppComponent]\n})\nexport class AppModule {\n}\n",
             "children": [
                 {
                     "type": "providers",
@@ -672,6 +811,16 @@
     ],
     "miscellaneous": {
         "variables": [
+            {
+                "name": "Close",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/dialog/dialog.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    isOpen: false\n  },\n  decorators: [\n    moduleMetadata({\n      declarations: [DialogComponent],\n      imports: [CommonModule]\n    })\n  ],\n  render: args => ({\n    template: `\n      <app-dialog-wrapper [isOpen]=\"args.isOpen\">\n        <div header>Some content</div>\n        <div body>\n          <p>Some more content</p>\n          <button class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Button that clicks</button>\n        </div>\n      </app-dialog-wrapper>\n    `,\n    props: args\n  })\n}"
+            },
             {
                 "name": "Large",
                 "ctype": "miscellaneous",
@@ -759,8 +908,18 @@
                 "file": "src/app/dialog/dialog.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "Meta<DialogComponent>",
-                "defaultValue": "{\n  title: 'Components/Dialog',\n  component: DialogComponent,\n  tags: ['autodocs'],\n  render: (args: DialogComponent) => ({\n    props: {\n      ...args,\n    },\n    template: `\n      <app-dialog [isOpen]=\"isOpen\">\n        <div header>Some content</div>\n        <div body>\n          <p>Some more content</p>\n          <button class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Button that clicks</button>\n        </div>\n      </app-dialog>\n    `,\n  }),\n}"
+                "type": "Meta<DialogWrapperComponent>",
+                "defaultValue": "{\n  title: 'Components/Dialog',\n  component: DialogWrapperComponent,\n  tags: ['autodocs']\n}"
+            },
+            {
+                "name": "Open",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/dialog/dialog.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    isOpen: true\n  },\n  decorators: [\n    moduleMetadata({\n      declarations: [DialogComponent],\n      imports: [CommonModule]\n    })\n  ],\n  render: args => ({\n    template: `\n      <app-dialog-wrapper [isOpen]=\"args.isOpen\">\n        <div header>Some content</div>\n        <div body>\n          <p>Some more content</p>\n          <button class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Button that clicks</button>\n        </div>\n      </app-dialog-wrapper>\n    `,\n    props: args\n  })\n}"
             },
             {
                 "name": "preview",
@@ -781,16 +940,6 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  args: {\n    primary: true,\n    label: 'Button',\n  },\n}"
-            },
-            {
-                "name": "Primary",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/dialog/dialog.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  args: {\n    isOpen: true,\n  },\n}"
             },
             {
                 "name": "Secondary",
@@ -852,7 +1001,7 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<DialogComponent>",
+                "rawtype": "StoryObj<DialogWrapperComponent>",
                 "file": "src/app/dialog/dialog.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -862,6 +1011,38 @@
         ],
         "enumerations": [],
         "groupedVariables": {
+            "src/app/dialog/dialog.stories.ts": [
+                {
+                    "name": "Close",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/dialog/dialog.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    isOpen: false\n  },\n  decorators: [\n    moduleMetadata({\n      declarations: [DialogComponent],\n      imports: [CommonModule]\n    })\n  ],\n  render: args => ({\n    template: `\n      <app-dialog-wrapper [isOpen]=\"args.isOpen\">\n        <div header>Some content</div>\n        <div body>\n          <p>Some more content</p>\n          <button class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Button that clicks</button>\n        </div>\n      </app-dialog-wrapper>\n    `,\n    props: args\n  })\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/dialog/dialog.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<DialogWrapperComponent>",
+                    "defaultValue": "{\n  title: 'Components/Dialog',\n  component: DialogWrapperComponent,\n  tags: ['autodocs']\n}"
+                },
+                {
+                    "name": "Open",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/dialog/dialog.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    isOpen: true\n  },\n  decorators: [\n    moduleMetadata({\n      declarations: [DialogComponent],\n      imports: [CommonModule]\n    })\n  ],\n  render: args => ({\n    template: `\n      <app-dialog-wrapper [isOpen]=\"args.isOpen\">\n        <div header>Some content</div>\n        <div body>\n          <p>Some more content</p>\n          <button class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Button that clicks</button>\n        </div>\n      </app-dialog-wrapper>\n    `,\n    props: args\n  })\n}"
+                }
+            ],
             "src/stories/Button.stories.ts": [
                 {
                     "name": "Large",
@@ -978,28 +1159,6 @@
                     "defaultValue": "{\n  title: 'Example/Page',\n  component: Page,\n  parameters: {\n    // More on how to position stories at: https://storybook.js.org/docs/angular/configure/story-layout\n    layout: 'fullscreen',\n  },\n  decorators: [\n    moduleMetadata({\n      declarations: [Button, Header],\n      imports: [CommonModule],\n    }),\n  ],\n}"
                 }
             ],
-            "src/app/dialog/dialog.stories.ts": [
-                {
-                    "name": "meta",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/dialog/dialog.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Meta<DialogComponent>",
-                    "defaultValue": "{\n  title: 'Components/Dialog',\n  component: DialogComponent,\n  tags: ['autodocs'],\n  render: (args: DialogComponent) => ({\n    props: {\n      ...args,\n    },\n    template: `\n      <app-dialog [isOpen]=\"isOpen\">\n        <div header>Some content</div>\n        <div body>\n          <p>Some more content</p>\n          <button class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Button that clicks</button>\n        </div>\n      </app-dialog>\n    `,\n  }),\n}"
-                },
-                {
-                    "name": "Primary",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/dialog/dialog.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: {\n    isOpen: true,\n  },\n}"
-                }
-            ],
             ".storybook/preview.ts": [
                 {
                     "name": "preview",
@@ -1060,7 +1219,7 @@
                     "name": "Story",
                     "ctype": "miscellaneous",
                     "subtype": "typealias",
-                    "rawtype": "StoryObj<DialogComponent>",
+                    "rawtype": "StoryObj<DialogWrapperComponent>",
                     "file": "src/app/dialog/dialog.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
@@ -1109,7 +1268,26 @@
                 "linktype": "component",
                 "name": "DialogComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/12",
+                "coverageCount": "0/18",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/dialog/dialog.stories.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "DialogWrapperComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/2",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/dialog/dialog.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Close",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
                 "status": "low"
             },
             {
@@ -1127,7 +1305,7 @@
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
-                "name": "Primary",
+                "name": "Open",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
