@@ -1,26 +1,16 @@
-import {
-  AfterContentChecked,
-  AfterViewInit,
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  Output,
-  ViewChild
-} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, Output, ViewChild} from '@angular/core';
 
 @Component({
   selector: 'app-dialog', templateUrl: './dialog.component.html', styleUrls: ['./dialog.component.css']
 })
-export class DialogComponent implements AfterViewInit, AfterContentChecked, OnDestroy {
+export class DialogComponent implements AfterViewInit, OnDestroy {
 
   firstFocusableElement!: HTMLElement
   lastFocusableElement!: HTMLElement
-  @Input() isOpen = true;
+  @Input() previousFocusElement!: HTMLElement;
   @ViewChild('closeButton', {static: false}) closeButton!: ElementRef;
-  @Output() closeEvent = new EventEmitter<void>();
-  @Output() openEvent = new EventEmitter<void>();
+  @Output() onClose = new EventEmitter<void>();
+  @Output() onOpen = new EventEmitter<void>();
   eventFunction = this.captureTabbing.bind(this)
 
   get focusableElements(): NodeListOf<HTMLElement> {
@@ -36,20 +26,22 @@ export class DialogComponent implements AfterViewInit, AfterContentChecked, OnDe
   }
 
   ngAfterViewInit(): void {
-    if (!this.isOpen) return;
-    this.closeButton.nativeElement.focus();
-    this.captureFocus();
-    this.openEvent.emit()
+    this.open();
   }
 
-  ngAfterContentChecked(): void {
-    if (!this.isOpen) return;
+  open() {
+    this.closeButton.nativeElement.focus();
+    this.captureFocus();
+    this.onOpen.emit()
+  }
+
+  updateLastFocusableElement() {
     this.lastFocusableElement = this.getLastFocusableElement();
   }
 
   close() {
-    this.isOpen = false;
-    this.closeEvent.emit();
+    this.previousFocusElement.focus();
+    this.onClose.emit();
   }
 
   closeOnEscape(e: KeyboardEvent) {
