@@ -15,7 +15,8 @@ export class DialogComponent implements AfterViewInit, OnDestroy {
   eventFunction = this.captureTabbing.bind(this)
   firstFocusableElement!: HTMLElement
   lastFocusableElement!: HTMLElement
-  private contentObserver?: MutationObserver;
+  contentObserver?: MutationObserver;
+  liveMessage: string = '';
 
   get focusableElements(): NodeListOf<HTMLElement> {
     return document.querySelectorAll('a[href], button, textarea, input[type="text"], input[type="radio"], input[type="checkbox"], select') as NodeListOf<HTMLElement>;
@@ -35,6 +36,7 @@ export class DialogComponent implements AfterViewInit, OnDestroy {
   }
 
   open() {
+    this.liveMessage = 'Dialog opened. Press escape to close.';
     this.closeButton.nativeElement.focus();
     this.captureFocus();
     this.onOpen.emit()
@@ -68,6 +70,7 @@ export class DialogComponent implements AfterViewInit, OnDestroy {
   }
 
   close() {
+    this.liveMessage = 'Dialog closed.';
     this.previousFocusElement?.focus();
     this.onClose.emit();
   }
