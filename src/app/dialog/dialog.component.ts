@@ -5,7 +5,7 @@ import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, Ou
 })
 export class DialogComponent implements AfterViewInit, OnDestroy {
 
-  @Input() previousFocusElement: HTMLElement | null = null;
+  @Input() previousFocusElement?: HTMLElement;
   @Input() label = 'Dialog';
   @Input() isCloseOnBackgroundClick = true;
   @ViewChild('closeButton', {static: false}) closeButton!: ElementRef;
