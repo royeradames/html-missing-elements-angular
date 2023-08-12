@@ -6,13 +6,15 @@ import {ButtonComponent} from './button/button.component';
 import {
   DialogWithLastFousAbleElementComponent
 } from "./dialogWithLastFocusableItem/dialog-with-last-focusable-element.component";
+import {Modal} from "./modal/modal.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     DialogComponent,
     ButtonComponent,
-    DialogWithLastFousAbleElementComponent
+    DialogWithLastFousAbleElementComponent,
+    Modal
   ],
   imports: [
     BrowserModule
