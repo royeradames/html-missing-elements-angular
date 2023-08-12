@@ -2,21 +2,21 @@
 
 <div aria-live="polite" class="sr-only">{{liveMessage}}</div>
 
-<div (keydown)="closeOnEscape($event)" class="dialogs" id="dialog_layer">
-
-  <div #dialog [attr.aria-label]="label" aria-modal="true" class="relative" id="dialog" role="dialog">
-    <div class="relative">
-
-      <div class="flex justify-end">
-        <button #closeButton (click)="close()"><span class="sr-only">Close dialog</span>x</button>
-      </div>
-      <ng-content select="[header]"></ng-content>
-      <ng-content select="[body]"></ng-content>
-      <ng-content select="[footer]"></ng-content>
-      <button #lastElement
-              (click)="focusOnFirstElement()"
-              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded absolute left-[calc(-100vw-100px)] focus:left-0 focus:bottom-0">
-        <span class="sr-only">Go to beginning</span><span aria-hidden="true">^</span></button>
-    </div>
+<section #dialog
+         (keydown)="closeOnEscape($event)"
+         [attr.aria-label]="label"
+         aria-modal="true"
+         class="relative bg-white rounded-lg shadow-lg p-6 w-full max-w-md mx-auto my-12"
+         id="dialog"
+         role="dialog">
+  <div class="flex justify-end">
+    <button #closeButton (click)="close()"><span class="sr-only">Close dialog</span>x</button>
   </div>
-</div>
+  <ng-content select="[header]"></ng-content>
+  <ng-content select="[body]"></ng-content>
+  <ng-content select="[footer]"></ng-content>
+  <button #lastElement
+          (click)="focusOnFirstElement()"
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded absolute left-[calc(-100vw-100px)] focus:left-0 focus:bottom-0">
+    <span class="sr-only">Go to beginning</span><span aria-hidden="true">^</span></button>
+</section>
