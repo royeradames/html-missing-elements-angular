@@ -12,7 +12,7 @@ export class ModernDialogComponent implements AfterViewInit, OnDestroy {
   @Input() isCloseOnBackgroundClick = true;
   @ViewChild('closeButton', {static: false}) closeButton!: ElementRef;
   @ViewChild('lastElement', {static: false}) lastElement!: ElementRef;
-  @ViewChild('dialog', {static: false}) dialog!: ElementRef;
+  @ViewChild('dialog', {static: false}) dialog!: ElementRef<HTMLDialogElement>;
   @Output() onClose = new EventEmitter<void>();
   @Output() onOpen = new EventEmitter<void>();
   eventFunction = this.captureTabbing.bind(this)
@@ -27,6 +27,7 @@ export class ModernDialogComponent implements AfterViewInit, OnDestroy {
   }
 
   open() {
+    this.dialog.nativeElement.showModal();
     this.liveMessage = 'Dialog opened. Press escape to close.';
     this.closeButton.nativeElement.focus();
     this.captureFocus();
@@ -39,9 +40,24 @@ export class ModernDialogComponent implements AfterViewInit, OnDestroy {
     this.onClose.emit();
   }
 
-  backgroundClose() {
-    if (!this.isCloseOnBackgroundClick) return;
-    this.close();
+  backgroundClose(e: MouseEvent) {
+    const targetElement = e.target as HTMLElement;
+
+    if (targetElement.tagName !== 'DIALOG') //This prevents issues with forms
+      return;
+
+    const rect = targetElement.getBoundingClientRect();
+
+    const clickedInDialog = (
+      rect.top <= e.clientY &&
+      e.clientY <= rect.top + rect.height &&
+      rect.left <= e.clientX &&
+      e.clientX <= rect.left + rect.width
+    );
+
+    if (clickedInDialog === false && 'close' in targetElement) {
+      this.close();
+    }
   }
 
   closeOnEscape(e: KeyboardEvent) {

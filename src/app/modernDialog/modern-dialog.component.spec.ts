@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DialogComponent } from './modern-dialog.component';
+import { ModernDialogComponent } from './modern-dialog.component';
 
-describe('DialogComponent', () => {
-  let component: DialogComponent;
-  let fixture: ComponentFixture<DialogComponent>;
+describe('ModernDialogComponent', () => {
+  let component: ModernDialogComponent;
+  let fixture: ComponentFixture<ModernDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DialogComponent ]
+      declarations: [ ModernDialogComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(DialogComponent);
+    fixture = TestBed.createComponent(ModernDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

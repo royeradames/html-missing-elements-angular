@@ -1,21 +1,21 @@
-import {DialogWithLastFousAbleElementComponent} from "./modern-dialog.component"
+import {ModernDialogComponent} from "./modern-dialog.component"
 import type { Meta, StoryObj } from '@storybook/angular';
 
 // More on how to set up stories at: https://storybook.js.org/docs/angular/writing-stories/introduction
-const meta: Meta<DialogWithLastFousAbleElementComponent> = {
+const meta: Meta<ModernDialogComponent> = {
   title: 'Components/Modern Dialog',
-  component: DialogWithLastFousAbleElementComponent,
+  component: ModernDialogComponent,
   tags: ['autodocs'],
 };
 
 export default meta;
-type Story = StoryObj<DialogWithLastFousAbleElementComponent>;
+type Story = StoryObj<ModernDialogComponent>;
 
 // More on writing stories with args: https://storybook.js.org/docs/angular/writing-stories/args
 export const Default: Story = {
   args: {
   },
-  render: (args: DialogWithLastFousAbleElementComponent) => ({
+  render: (args: ModernDialogComponent) => ({
     props: {
       ...args,
       isOpen: true,
@@ -34,7 +34,7 @@ export const Default: Story = {
 export const CloseWithButton: Story = {
   args: {
   },
-  render: (args: DialogWithLastFousAbleElementComponent) => ({
+  render: (args: ModernDialogComponent) => ({
     props: {
       ...args,
       isOpen: false,
@@ -56,7 +56,7 @@ export const CloseWithButton: Story = {
 export const OpenWithButton: Story = {
   args: {
   },
-  render: (args: DialogWithLastFousAbleElementComponent) => ({
+  render: (args: ModernDialogComponent) => ({
     props: {
       ...args,
       isOpen: true,
@@ -79,7 +79,7 @@ export const OpenWithButton: Story = {
 export const DialogUpdates: Story = {
   args: {
   },
-  render: (args: DialogWithLastFousAbleElementComponent) => ({
+  render: (args: ModernDialogComponent) => ({
     props: {
       ...args,
       isOpen: true,

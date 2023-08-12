@@ -4,6 +4,7 @@
 
 <dialog #dialog
         (keydown)="closeOnEscape($event)"
+        (click)="backgroundClose($event)"
         [attr.aria-label]="label"
         aria-modal="true"
         class="relative bg-white rounded-lg shadow-lg p-6 w-full max-w-md mx-auto my-12"

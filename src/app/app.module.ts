@@ -7,6 +7,7 @@ import {
   DialogWithLastFousAbleElementComponent
 } from "./dialogWithLastFocusableItem/dialog-with-last-focusable-element.component";
 import {Modal} from "./modal/modal.component";
+import {ModernDialogComponent} from "./modernDialog/modern-dialog.component";
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import {Modal} from "./modal/modal.component";
     DialogComponent,
     ButtonComponent,
     DialogWithLastFousAbleElementComponent,
-    Modal
+    Modal,
+    ModernDialogComponent
   ],
   imports: [
     BrowserModule
