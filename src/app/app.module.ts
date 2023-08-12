@@ -9,6 +9,7 @@ import {
 import {Modal} from "./dialogs/modal/modal.component";
 import {ModernDialogComponent} from "./dialogs/modernDialog/modern-dialog.component";
 import {ModernDialogWrapComponent} from "./dialogs/modernDialogWrap/modern-dialog-wrap.component";
+import { TabsComponent } from './carousel/tabs/tabs.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import {ModernDialogWrapComponent} from "./dialogs/modernDialogWrap/modern-dialo
     DialogWithLastFousAbleElementComponent,
     Modal,
     ModernDialogComponent,
-    ModernDialogWrapComponent
+    ModernDialogWrapComponent,
+    TabsComponent
   ],
   imports: [
     BrowserModule
