@@ -3,7 +3,7 @@ import {TabsComponent} from "./tabs.component";
 
 // More on how to set up stories at: https://storybook.js.org/docs/angular/writing-stories/introduction
 const meta: Meta<TabsComponent> = {
-  title: 'Components/Dialog',
+  title: 'Components/Caurousel/Tabs',
   component: TabsComponent,
   tags: ['autodocs'],
 };

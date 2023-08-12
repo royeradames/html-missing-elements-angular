@@ -255,7 +255,7 @@
         {
             "name": "DialogComponent",
             "id": "component-DialogComponent-1ef6a86ff17909a49e9a7d42974561233d5d55864dedab28ce154bf8fe974fcbc00570730249f20620de5e3eb35f59305a0b727d5dc8d150df2c1331188d6b00",
-            "file": "src/app/dialog/dialog.component.ts",
+            "file": "src/app/dialogs/dialog/dialog.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
@@ -672,7 +672,7 @@
         {
             "name": "DialogWithLastFousAbleElementComponent",
             "id": "component-DialogWithLastFousAbleElementComponent-f7dc2f11c7baebcd8643db6f6ba91d7dc8af3798392c970740c9acd769f132b5f8a893cae0d367d1a7a328a8863bf1620b49e02ae056e28ad18d0c6d054f6e8f",
-            "file": "src/app/dialogWithLastFocusableItem/dialog-with-last-focusable-element.component.ts",
+            "file": "src/app/dialogs/dialogWithLastFocusableItem/dialog-with-last-focusable-element.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
@@ -1134,7 +1134,7 @@
         {
             "name": "Modal",
             "id": "component-Modal-a2305800ca0942153be13f4d4d7b8160f1adae488c1309e9e703bd2804d91e78dac7859fd5b83742bab45f2fddab54b88a6d5455b0c685bcb22d070c3f661089",
-            "file": "src/app/modal/modal.component.ts",
+            "file": "src/app/dialogs/modal/modal.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
@@ -1520,7 +1520,7 @@
         {
             "name": "ModernDialogComponent",
             "id": "component-ModernDialogComponent-a2425a92e412633ff999cef37b6e373b651c1abcf891aa20d763356cc46262bb914a244d3c5fd6e15242e86b3b3757d86aa3b803d1c19fc2073b743e8e5dcb1d",
-            "file": "src/app/modernDialog/modern-dialog.component.ts",
+            "file": "src/app/dialogs/modernDialog/modern-dialog.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
@@ -1924,7 +1924,7 @@
         {
             "name": "ModernDialogWrapComponent",
             "id": "component-ModernDialogWrapComponent-7eb507701b09bf7d78eaf52989d8efef84769e7892a369141aef3ed6dc711f361ad3c0741e695c844f4b446c57631f4d23fb94f3f470ea784294f56a4bc0a7aa",
-            "file": "src/app/modernDialogWrap/modern-dialog-wrap.component.ts",
+            "file": "src/app/dialogs/modernDialogWrap/modern-dialog-wrap.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
@@ -2323,7 +2323,7 @@
                 "AfterViewInit",
                 "OnDestroy"
             ],
-            "templateData": "<!--<div (click)=\"backgroundClose()\" class=\"fixed inset-0 z-0 bg-black bg-opacity-50\" tabindex=\"-1\"></div>-->\n\n<div aria-live=\"polite\" class=\"sr-only\">{{liveMessage}}</div>\n\n<dialog #dialog\n        (keydown)=\"closeOnEscape($event)\"\n        (click)=\"backgroundClose($event)\"\n        [attr.aria-label]=\"label\"\n        aria-modal=\"true\"\n        class=\"relative bg-white rounded-lg shadow-lg p-6 w-full max-w-md mx-auto my-12\"\n        id=\"dialog\"\n        role=\"dialog\">\n  <div class=\"flex justify-end\">\n    <button #closeButton (click)=\"close()\"><span class=\"sr-only\">Close dialog</span>x</button>\n  </div>\n  <ng-content select=\"[header]\"></ng-content>\n  <ng-content select=\"[body]\"></ng-content>\n  <ng-content select=\"[footer]\"></ng-content>\n  <button #lastElement\n          (click)=\"focusOnFirstElement()\"\n          class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded absolute left-[calc(-100vw-100px)] focus:left-0 focus:bottom-0\">\n    <span class=\"sr-only\">Go to beginning</span><span aria-hidden=\"true\">^</span></button>\n</dialog>\n"
+            "templateData": "<div aria-live=\"polite\" class=\"sr-only\">{{liveMessage}}</div>\n\n<dialog #dialog\n        (click)=\"backgroundClose($event)\"\n        (keydown)=\"closeOnEscape($event)\"\n        [attr.aria-label]=\"label\"\n        aria-modal=\"true\"\n        class=\"relative bg-white rounded-lg shadow-lg p-6 w-full max-w-md mx-auto my-12 overflow-hidden max-h-[90vh]\"\n        id=\"dialog\"\n        role=\"dialog\">\n  <div class=\"flex justify-end\">\n    <button #closeButton (click)=\"close()\"><span class=\"sr-only\">Close dialog</span>x</button>\n  </div>\n  <div class=\"relative overflow-y-auto max-h-[75vh]\">\n    <ng-content select=\"[header]\"></ng-content>\n    <ng-content select=\"[body]\"></ng-content>\n    <ng-content select=\"[footer]\"></ng-content>\n  </div>\n  <div class=\"relative\">\n    <button #lastElement\n            (click)=\"focusOnFirstElement()\"\n            class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded absolute left-[calc(-100vw-100px)] focus:left-0 focus:bottom-0\">\n      <span class=\"sr-only\">Go to beginning</span><span aria-hidden=\"true\">^</span></button>\n  </div>\n\n</dialog>\n"
         },
         {
             "name": "PageComponent",
@@ -2407,18 +2407,61 @@
                 }
             ],
             "stylesData": ""
+        },
+        {
+            "name": "TabsComponent",
+            "id": "component-TabsComponent-83c42c9ccad48818bd75f6ce780a91b9d0c003ed61c788c72b28433345898a0539d1387221648e1e7bc0a688143e0576d1b5ce819a285e38cf78eafd298a44a8",
+            "file": "src/app/carousel/tabs/tabs.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "app-tabs",
+            "styleUrls": [
+                "./tabs.component.css"
+            ],
+            "styles": [],
+            "templateUrl": [
+                "./tabs.component.html"
+            ],
+            "viewProviders": [],
+            "hostDirectives": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [],
+            "methodsClass": [],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "standalone": false,
+            "imports": [],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-tabs',\n  templateUrl: './tabs.component.html',\n  styleUrls: ['./tabs.component.css']\n})\nexport class TabsComponent {\n\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": "",
+                    "styleUrl": "./tabs.component.css"
+                }
+            ],
+            "stylesData": "",
+            "templateData": "<p>tabs works!</p>\n"
         }
     ],
     "modules": [
         {
             "name": "AppModule",
-            "id": "module-AppModule-1b014dda924e41da76cb1d28d1fcdc1713155859170b657456dcff46e0b1ca314fbd7c5abd48d24ae12d20549b5b7b16a5d53986aa23fed4981c1ac7f20fcb97",
+            "id": "module-AppModule-87ab86c59f05fe858937de08f043b97bc33cf628f84adc5fdb58e0bf5b7c15cda07d039f7f37f173722b98c75ab97289b73b8ac2f6d14577c29785fae0166b22",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "src/app/app.module.ts",
             "methods": [],
-            "sourceCode": "import {NgModule} from '@angular/core';\nimport {BrowserModule} from '@angular/platform-browser';\nimport {AppComponent} from './app.component';\nimport {DialogComponent} from './dialog/dialog.component';\nimport {ButtonComponent} from './button/button.component';\nimport {\n  DialogWithLastFousAbleElementComponent\n} from \"./dialogWithLastFocusableItem/dialog-with-last-focusable-element.component\";\nimport {Modal} from \"./modal/modal.component\";\nimport {ModernDialogComponent} from \"./modernDialog/modern-dialog.component\";\nimport {ModernDialogWrapComponent} from \"./modernDialogWrap/modern-dialog-wrap.component\";\n\n@NgModule({\n  declarations: [\n    AppComponent,\n    DialogComponent,\n    ButtonComponent,\n    DialogWithLastFousAbleElementComponent,\n    Modal,\n    ModernDialogComponent,\n    ModernDialogWrapComponent\n  ],\n  imports: [\n    BrowserModule\n  ],\n  providers: [],\n  bootstrap: [AppComponent]\n})\nexport class AppModule {\n}\n",
+            "sourceCode": "import {NgModule} from '@angular/core';\nimport {BrowserModule} from '@angular/platform-browser';\nimport {AppComponent} from './app.component';\nimport {DialogComponent} from './dialogs/dialog/dialog.component';\nimport {ButtonComponent} from './button/button.component';\nimport {\n  DialogWithLastFousAbleElementComponent\n} from \"./dialogs/dialogWithLastFocusableItem/dialog-with-last-focusable-element.component\";\nimport {Modal} from \"./dialogs/modal/modal.component\";\nimport {ModernDialogComponent} from \"./dialogs/modernDialog/modern-dialog.component\";\nimport {ModernDialogWrapComponent} from \"./dialogs/modernDialogWrap/modern-dialog-wrap.component\";\nimport { TabsComponent } from './carousel/tabs/tabs.component';\n\n@NgModule({\n  declarations: [\n    AppComponent,\n    DialogComponent,\n    ButtonComponent,\n    DialogWithLastFousAbleElementComponent,\n    Modal,\n    ModernDialogComponent,\n    ModernDialogWrapComponent,\n    TabsComponent\n  ],\n  imports: [\n    BrowserModule\n  ],\n  providers: [],\n  bootstrap: [AppComponent]\n})\nexport class AppModule {\n}\n",
             "children": [
                 {
                     "type": "providers",
@@ -2444,6 +2487,9 @@
                         },
                         {
                             "name": "ModernDialogWrapComponent"
+                        },
+                        {
+                            "name": "TabsComponent"
                         }
                     ]
                 },
@@ -2476,7 +2522,7 @@
                 "name": "CloseWithButton",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/dialog/dialog.stories.ts",
+                "file": "src/app/dialogs/dialog/dialog.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
@@ -2486,7 +2532,7 @@
                 "name": "CloseWithButton",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/modal/modal.stories.ts",
+                "file": "src/app/dialogs/modal/modal.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
@@ -2496,17 +2542,7 @@
                 "name": "CloseWithButton",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/dialogWithLastFocusableItem/dialog-with-last-focusable-element.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  args: {\n  },\n  render: (args: DialogWithLastFousAbleElementComponent) => ({\n    props: {\n      ...args,\n      isOpen: false,\n    },\n    template: `\n      <button #button (click)=\"isOpen = !isOpen\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Toggle\n      Dialog\n    </button>\n      <app-dialog *ngIf=\"isOpen\" [previousFocusElement]=\"button\" (onClose)=\"isOpen = false\">\n        <div header>Some content</div>\n        <div body>\n          <p>Some more content</p>\n          <button class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Button that clicks</button>\n        </div>\n      </app-dialog>\n    `,\n  }),\n}"
-            },
-            {
-                "name": "CloseWithButton",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/modernDialog/modern-dialog.stories.ts",
+                "file": "src/app/dialogs/modernDialog/modern-dialog.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
@@ -2516,17 +2552,37 @@
                 "name": "CloseWithButton",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/modernDialogWrap/modern-dialog-wrap.stories.ts",
+                "file": "src/app/dialogs/modernDialogWrap/modern-dialog-wrap.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  args: {\n  },\n  render: (args: ModernDialogWrapComponent) => ({\n    props: {\n      ...args,\n      isOpen: false,\n    },\n    template: `\n      <button #button (click)=\"isOpen = !isOpen\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Toggle\n      Dialog\n    </button>\n      <app-dialog *ngIf=\"isOpen\" [previousFocusElement]=\"button\" (onClose)=\"isOpen = false\">\n        <div header>Some content</div>\n        <div body>\n          <p>Some more content</p>\n          <button class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Button that clicks</button>\n        </div>\n      </app-dialog>\n    `,\n  }),\n}"
             },
             {
+                "name": "CloseWithButton",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/dialogs/dialogWithLastFocusableItem/dialog-with-last-focusable-element.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n  },\n  render: (args: DialogWithLastFousAbleElementComponent) => ({\n    props: {\n      ...args,\n      isOpen: false,\n    },\n    template: `\n      <button #button (click)=\"isOpen = !isOpen\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Toggle\n      Dialog\n    </button>\n      <app-dialog *ngIf=\"isOpen\" [previousFocusElement]=\"button\" (onClose)=\"isOpen = false\">\n        <div header>Some content</div>\n        <div body>\n          <p>Some more content</p>\n          <button class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Button that clicks</button>\n        </div>\n      </app-dialog>\n    `,\n  }),\n}"
+            },
+            {
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/dialog/dialog.stories.ts",
+                "file": "src/app/carousel/tabs/tabs.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n  },\n  render: (args: TabsComponent) => ({\n    props: {\n      ...args,\n    },\n    template: `\n      <app-tabs></app-tabs>\n    `,\n  }),\n}"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/dialogs/dialog/dialog.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
@@ -2536,7 +2592,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/modal/modal.stories.ts",
+                "file": "src/app/dialogs/modal/modal.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
@@ -2546,17 +2602,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/dialogWithLastFocusableItem/dialog-with-last-focusable-element.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  args: {\n  },\n  render: (args: DialogWithLastFousAbleElementComponent) => ({\n    props: {\n      ...args,\n      isOpen: true,\n    },\n    template: `\n      <app-dialog *ngIf=\"isOpen\" (onClose)=\"isOpen = false\">\n        <div header>Some content</div>\n        <div body>\n          <p>Some more content</p>\n          <button class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Button that clicks</button>\n        </div>\n      </app-dialog>\n    `,\n  }),\n}"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/modernDialog/modern-dialog.stories.ts",
+                "file": "src/app/dialogs/modernDialog/modern-dialog.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
@@ -2566,17 +2612,27 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/modernDialogWrap/modern-dialog-wrap.stories.ts",
+                "file": "src/app/dialogs/modernDialogWrap/modern-dialog-wrap.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  args: {\n  },\n  render: (args: ModernDialogWrapComponent) => ({\n    props: {\n      ...args,\n      isOpen: true,\n    },\n    template: `\n      <app-dialog *ngIf=\"isOpen\" (onClose)=\"isOpen = false\">\n        <div header>Some content</div>\n        <div body>\n          <p>Some more content</p>\n          <button class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Button that clicks</button>\n        </div>\n      </app-dialog>\n    `,\n  }),\n}"
             },
             {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/dialogs/dialogWithLastFocusableItem/dialog-with-last-focusable-element.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n  },\n  render: (args: DialogWithLastFousAbleElementComponent) => ({\n    props: {\n      ...args,\n      isOpen: true,\n    },\n    template: `\n      <app-dialog *ngIf=\"isOpen\" (onClose)=\"isOpen = false\">\n        <div header>Some content</div>\n        <div body>\n          <p>Some more content</p>\n          <button class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Button that clicks</button>\n        </div>\n      </app-dialog>\n    `,\n  }),\n}"
+            },
+            {
                 "name": "DialogUpdates",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/dialog/dialog.stories.ts",
+                "file": "src/app/dialogs/dialog/dialog.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
@@ -2586,7 +2642,7 @@
                 "name": "DialogUpdates",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/modal/modal.stories.ts",
+                "file": "src/app/dialogs/modal/modal.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
@@ -2596,17 +2652,7 @@
                 "name": "DialogUpdates",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/dialogWithLastFocusableItem/dialog-with-last-focusable-element.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  args: {\n  },\n  render: (args: DialogWithLastFousAbleElementComponent) => ({\n    props: {\n      ...args,\n      isOpen: true,\n      updateDialog: false,\n    },\n    template: `\n      <button #button (click)=\"isOpen = !isOpen\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Toggle\n      Dialog\n    </button>\n      <app-dialog *ngIf=\"isOpen\" [previousFocusElement]=\"button\" (onClose)=\"isOpen = false\">\n        <div header *ngIf=\"!updateDialog\">Some content</div>\n        <div body *ngIf=\"!updateDialog\">\n          <p>Some more content</p>\n          <button (click)=\"updateDialog = true\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Activate changes</button>\n        </div>\n\n        <div header *ngIf=\"updateDialog\">Secondary Content Updated</div>\n        <div body *ngIf=\"updateDialog\">\n          <p>Updated content</p>\n          <button (click)=\"updateDialog = false\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Revert Changes</button>\n        </div>\n      </app-dialog>\n    `,\n  }),\n}"
-            },
-            {
-                "name": "DialogUpdates",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/modernDialog/modern-dialog.stories.ts",
+                "file": "src/app/dialogs/modernDialog/modern-dialog.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
@@ -2616,11 +2662,21 @@
                 "name": "DialogUpdates",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/modernDialogWrap/modern-dialog-wrap.stories.ts",
+                "file": "src/app/dialogs/modernDialogWrap/modern-dialog-wrap.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  args: {\n  },\n  render: (args: ModernDialogWrapComponent) => ({\n    props: {\n      ...args,\n      isOpen: true,\n      updateDialog: false,\n    },\n    template: `\n      <button #button (click)=\"isOpen = !isOpen\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Toggle\n      Dialog\n    </button>\n      <app-dialog *ngIf=\"isOpen\" [previousFocusElement]=\"button\" (onClose)=\"isOpen = false\">\n        <div header *ngIf=\"!updateDialog\">Some content</div>\n        <div body *ngIf=\"!updateDialog\">\n          <p>Some more content</p>\n          <button (click)=\"updateDialog = true\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Activate changes</button>\n        </div>\n\n        <div header *ngIf=\"updateDialog\">Secondary Content Updated</div>\n        <div body *ngIf=\"updateDialog\">\n          <p>Updated content</p>\n          <button (click)=\"updateDialog = false\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Revert Changes</button>\n        </div>\n      </app-dialog>\n    `,\n  }),\n}"
+            },
+            {
+                "name": "DialogUpdates",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/dialogs/dialogWithLastFocusableItem/dialog-with-last-focusable-element.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n  },\n  render: (args: DialogWithLastFousAbleElementComponent) => ({\n    props: {\n      ...args,\n      isOpen: true,\n      updateDialog: false,\n    },\n    template: `\n      <button #button (click)=\"isOpen = !isOpen\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Toggle\n      Dialog\n    </button>\n      <app-dialog *ngIf=\"isOpen\" [previousFocusElement]=\"button\" (onClose)=\"isOpen = false\">\n        <div header *ngIf=\"!updateDialog\">Some content</div>\n        <div body *ngIf=\"!updateDialog\">\n          <p>Some more content</p>\n          <button (click)=\"updateDialog = true\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Activate changes</button>\n        </div>\n\n        <div header *ngIf=\"updateDialog\">Secondary Content Updated</div>\n        <div body *ngIf=\"updateDialog\">\n          <p>Updated content</p>\n          <button (click)=\"updateDialog = false\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Revert Changes</button>\n        </div>\n      </app-dialog>\n    `,\n  }),\n}"
             },
             {
                 "name": "Large",
@@ -2706,7 +2762,17 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/dialog/dialog.stories.ts",
+                "file": "src/app/carousel/tabs/tabs.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<TabsComponent>",
+                "defaultValue": "{\n  title: 'Components/Caurousel/Tabs',\n  component: TabsComponent,\n  tags: ['autodocs'],\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/dialogs/dialog/dialog.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<DialogComponent>",
@@ -2716,7 +2782,7 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/modal/modal.stories.ts",
+                "file": "src/app/dialogs/modal/modal.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<Modal>",
@@ -2726,17 +2792,7 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/dialogWithLastFocusableItem/dialog-with-last-focusable-element.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<DialogWithLastFousAbleElementComponent>",
-                "defaultValue": "{\n  title: 'Components/Dialog with last focusable element',\n  component: DialogWithLastFousAbleElementComponent,\n  tags: ['autodocs'],\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/modernDialog/modern-dialog.stories.ts",
+                "file": "src/app/dialogs/modernDialog/modern-dialog.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<ModernDialogComponent>",
@@ -2746,17 +2802,27 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/modernDialogWrap/modern-dialog-wrap.stories.ts",
+                "file": "src/app/dialogs/modernDialogWrap/modern-dialog-wrap.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<ModernDialogWrapComponent>",
                 "defaultValue": "{\n  title: 'Components/Modal with Wrap',\n  component: ModernDialogWrapComponent,\n  tags: ['autodocs'],\n}"
             },
             {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/dialogs/dialogWithLastFocusableItem/dialog-with-last-focusable-element.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<DialogWithLastFousAbleElementComponent>",
+                "defaultValue": "{\n  title: 'Components/Dialog with last focusable element',\n  component: DialogWithLastFousAbleElementComponent,\n  tags: ['autodocs'],\n}"
+            },
+            {
                 "name": "OpenWithButton",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/dialog/dialog.stories.ts",
+                "file": "src/app/dialogs/dialog/dialog.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
@@ -2766,7 +2832,7 @@
                 "name": "OpenWithButton",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/modal/modal.stories.ts",
+                "file": "src/app/dialogs/modal/modal.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
@@ -2776,17 +2842,7 @@
                 "name": "OpenWithButton",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/dialogWithLastFocusableItem/dialog-with-last-focusable-element.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  args: {\n  },\n  render: (args: DialogWithLastFousAbleElementComponent) => ({\n    props: {\n      ...args,\n      isOpen: true,\n    },\n    template: `\n      <button #button (click)=\"isOpen = !isOpen\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Toggle\n      Dialog\n    </button>\n      <app-dialog *ngIf=\"isOpen\" [previousFocusElement]=\"button\" (onClose)=\"isOpen = false\">\n        <div header>Some content</div>\n        <div body>\n          <p>Some more content</p>\n          <button class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Button that clicks</button>\n        </div>\n      </app-dialog>\n    `,\n  }),\n}"
-            },
-            {
-                "name": "OpenWithButton",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/modernDialog/modern-dialog.stories.ts",
+                "file": "src/app/dialogs/modernDialog/modern-dialog.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
@@ -2796,11 +2852,31 @@
                 "name": "OpenWithButton",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/modernDialogWrap/modern-dialog-wrap.stories.ts",
+                "file": "src/app/dialogs/modernDialogWrap/modern-dialog-wrap.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  args: {\n  },\n  render: (args: ModernDialogWrapComponent) => ({\n    props: {\n      ...args,\n      isOpen: true,\n    },\n    template: `\n      <button #button (click)=\"isOpen = !isOpen\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Toggle\n      Dialog\n    </button>\n      <app-dialog *ngIf=\"isOpen\" [previousFocusElement]=\"button\" (onClose)=\"isOpen = false\">\n        <div header>Some content</div>\n        <div body>\n          <p>Some more content</p>\n          <button class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Button that clicks</button>\n        </div>\n      </app-dialog>\n    `,\n  }),\n}"
+            },
+            {
+                "name": "OpenWithButton",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/dialogs/dialogWithLastFocusableItem/dialog-with-last-focusable-element.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n  },\n  render: (args: DialogWithLastFousAbleElementComponent) => ({\n    props: {\n      ...args,\n      isOpen: true,\n    },\n    template: `\n      <button #button (click)=\"isOpen = !isOpen\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Toggle\n      Dialog\n    </button>\n      <app-dialog *ngIf=\"isOpen\" [previousFocusElement]=\"button\" (onClose)=\"isOpen = false\">\n        <div header>Some content</div>\n        <div body>\n          <p>Some more content</p>\n          <button class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Button that clicks</button>\n        </div>\n      </app-dialog>\n    `,\n  }),\n}"
+            },
+            {
+                "name": "OpenWithButtonLongContent",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/dialogs/modernDialogWrap/modern-dialog-wrap.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n  },\n  render: (args: ModernDialogWrapComponent) => ({\n    props: {\n      ...args,\n      isOpen: true,\n    },\n    template: `\n      <button #button (click)=\"isOpen = !isOpen\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Toggle\n      Dialog\n    </button>\n      <app-dialog *ngIf=\"isOpen\" [previousFocusElement]=\"button\" (onClose)=\"isOpen = false\">\n        <div header>Some content</div>\n        <div body>\n          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\n          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\n          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\n          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\n          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\n          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\n          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\n          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\n          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\n          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\n          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\n          <button class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Button that clicks</button>\n        </div>\n      </app-dialog>\n    `,\n  }),\n}"
             },
             {
                 "name": "preview",
@@ -2882,8 +2958,19 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
+                "rawtype": "StoryObj<TabsComponent>",
+                "file": "src/app/carousel/tabs/tabs.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 180
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
                 "rawtype": "StoryObj<DialogComponent>",
-                "file": "src/app/dialog/dialog.stories.ts",
+                "file": "src/app/dialogs/dialog/dialog.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -2894,18 +2981,7 @@
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
                 "rawtype": "StoryObj<Modal>",
-                "file": "src/app/modal/modal.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "",
-                "kind": 180
-            },
-            {
-                "name": "Story",
-                "ctype": "miscellaneous",
-                "subtype": "typealias",
-                "rawtype": "StoryObj<DialogWithLastFousAbleElementComponent>",
-                "file": "src/app/dialogWithLastFocusableItem/dialog-with-last-focusable-element.stories.ts",
+                "file": "src/app/dialogs/modal/modal.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -2916,7 +2992,7 @@
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
                 "rawtype": "StoryObj<ModernDialogComponent>",
-                "file": "src/app/modernDialog/modern-dialog.stories.ts",
+                "file": "src/app/dialogs/modernDialog/modern-dialog.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -2927,7 +3003,18 @@
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
                 "rawtype": "StoryObj<ModernDialogWrapComponent>",
-                "file": "src/app/modernDialogWrap/modern-dialog-wrap.stories.ts",
+                "file": "src/app/dialogs/modernDialogWrap/modern-dialog-wrap.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 180
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<DialogWithLastFousAbleElementComponent>",
+                "file": "src/app/dialogs/dialogWithLastFocusableItem/dialog-with-last-focusable-element.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -2936,12 +3023,12 @@
         ],
         "enumerations": [],
         "groupedVariables": {
-            "src/app/dialog/dialog.stories.ts": [
+            "src/app/dialogs/dialog/dialog.stories.ts": [
                 {
                     "name": "CloseWithButton",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/dialog/dialog.stories.ts",
+                    "file": "src/app/dialogs/dialog/dialog.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
@@ -2951,7 +3038,7 @@
                     "name": "Default",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/dialog/dialog.stories.ts",
+                    "file": "src/app/dialogs/dialog/dialog.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
@@ -2961,7 +3048,7 @@
                     "name": "DialogUpdates",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/dialog/dialog.stories.ts",
+                    "file": "src/app/dialogs/dialog/dialog.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
@@ -2971,7 +3058,7 @@
                     "name": "meta",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/dialog/dialog.stories.ts",
+                    "file": "src/app/dialogs/dialog/dialog.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<DialogComponent>",
@@ -2981,19 +3068,19 @@
                     "name": "OpenWithButton",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/dialog/dialog.stories.ts",
+                    "file": "src/app/dialogs/dialog/dialog.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
                     "defaultValue": "{\n  args: {\n  },\n  render: (args: DialogComponent) => ({\n    props: {\n      ...args,\n      isOpen: true,\n    },\n    template: `\n      <button #button (click)=\"isOpen = !isOpen\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Toggle\n      Dialog\n    </button>\n      <app-dialog *ngIf=\"isOpen\" [previousFocusElement]=\"button\" (onClose)=\"isOpen = false\">\n        <div header>Some content</div>\n        <div body>\n          <p>Some more content</p>\n          <button class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Button that clicks</button>\n        </div>\n      </app-dialog>\n    `,\n  }),\n}"
                 }
             ],
-            "src/app/modal/modal.stories.ts": [
+            "src/app/dialogs/modal/modal.stories.ts": [
                 {
                     "name": "CloseWithButton",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/modal/modal.stories.ts",
+                    "file": "src/app/dialogs/modal/modal.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
@@ -3003,7 +3090,7 @@
                     "name": "Default",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/modal/modal.stories.ts",
+                    "file": "src/app/dialogs/modal/modal.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
@@ -3013,7 +3100,7 @@
                     "name": "DialogUpdates",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/modal/modal.stories.ts",
+                    "file": "src/app/dialogs/modal/modal.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
@@ -3023,7 +3110,7 @@
                     "name": "meta",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/modal/modal.stories.ts",
+                    "file": "src/app/dialogs/modal/modal.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<Modal>",
@@ -3033,71 +3120,19 @@
                     "name": "OpenWithButton",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/modal/modal.stories.ts",
+                    "file": "src/app/dialogs/modal/modal.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
                     "defaultValue": "{\n  args: {\n  },\n  render: (args: Modal) => ({\n    props: {\n      ...args,\n      isOpen: true,\n    },\n    template: `\n      <button #button (click)=\"isOpen = !isOpen\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Toggle\n      Dialog\n    </button>\n      <app-dialog *ngIf=\"isOpen\" [previousFocusElement]=\"button\" (onClose)=\"isOpen = false\">\n        <div header>Some content</div>\n        <div body>\n          <p>Some more content</p>\n          <button class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Button that clicks</button>\n        </div>\n      </app-dialog>\n    `,\n  }),\n}"
                 }
             ],
-            "src/app/dialogWithLastFocusableItem/dialog-with-last-focusable-element.stories.ts": [
+            "src/app/dialogs/modernDialog/modern-dialog.stories.ts": [
                 {
                     "name": "CloseWithButton",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/dialogWithLastFocusableItem/dialog-with-last-focusable-element.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: {\n  },\n  render: (args: DialogWithLastFousAbleElementComponent) => ({\n    props: {\n      ...args,\n      isOpen: false,\n    },\n    template: `\n      <button #button (click)=\"isOpen = !isOpen\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Toggle\n      Dialog\n    </button>\n      <app-dialog *ngIf=\"isOpen\" [previousFocusElement]=\"button\" (onClose)=\"isOpen = false\">\n        <div header>Some content</div>\n        <div body>\n          <p>Some more content</p>\n          <button class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Button that clicks</button>\n        </div>\n      </app-dialog>\n    `,\n  }),\n}"
-                },
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/dialogWithLastFocusableItem/dialog-with-last-focusable-element.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: {\n  },\n  render: (args: DialogWithLastFousAbleElementComponent) => ({\n    props: {\n      ...args,\n      isOpen: true,\n    },\n    template: `\n      <app-dialog *ngIf=\"isOpen\" (onClose)=\"isOpen = false\">\n        <div header>Some content</div>\n        <div body>\n          <p>Some more content</p>\n          <button class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Button that clicks</button>\n        </div>\n      </app-dialog>\n    `,\n  }),\n}"
-                },
-                {
-                    "name": "DialogUpdates",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/dialogWithLastFocusableItem/dialog-with-last-focusable-element.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: {\n  },\n  render: (args: DialogWithLastFousAbleElementComponent) => ({\n    props: {\n      ...args,\n      isOpen: true,\n      updateDialog: false,\n    },\n    template: `\n      <button #button (click)=\"isOpen = !isOpen\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Toggle\n      Dialog\n    </button>\n      <app-dialog *ngIf=\"isOpen\" [previousFocusElement]=\"button\" (onClose)=\"isOpen = false\">\n        <div header *ngIf=\"!updateDialog\">Some content</div>\n        <div body *ngIf=\"!updateDialog\">\n          <p>Some more content</p>\n          <button (click)=\"updateDialog = true\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Activate changes</button>\n        </div>\n\n        <div header *ngIf=\"updateDialog\">Secondary Content Updated</div>\n        <div body *ngIf=\"updateDialog\">\n          <p>Updated content</p>\n          <button (click)=\"updateDialog = false\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Revert Changes</button>\n        </div>\n      </app-dialog>\n    `,\n  }),\n}"
-                },
-                {
-                    "name": "meta",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/dialogWithLastFocusableItem/dialog-with-last-focusable-element.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Meta<DialogWithLastFousAbleElementComponent>",
-                    "defaultValue": "{\n  title: 'Components/Dialog with last focusable element',\n  component: DialogWithLastFousAbleElementComponent,\n  tags: ['autodocs'],\n}"
-                },
-                {
-                    "name": "OpenWithButton",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/dialogWithLastFocusableItem/dialog-with-last-focusable-element.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: {\n  },\n  render: (args: DialogWithLastFousAbleElementComponent) => ({\n    props: {\n      ...args,\n      isOpen: true,\n    },\n    template: `\n      <button #button (click)=\"isOpen = !isOpen\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Toggle\n      Dialog\n    </button>\n      <app-dialog *ngIf=\"isOpen\" [previousFocusElement]=\"button\" (onClose)=\"isOpen = false\">\n        <div header>Some content</div>\n        <div body>\n          <p>Some more content</p>\n          <button class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Button that clicks</button>\n        </div>\n      </app-dialog>\n    `,\n  }),\n}"
-                }
-            ],
-            "src/app/modernDialog/modern-dialog.stories.ts": [
-                {
-                    "name": "CloseWithButton",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/modernDialog/modern-dialog.stories.ts",
+                    "file": "src/app/dialogs/modernDialog/modern-dialog.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
@@ -3107,7 +3142,7 @@
                     "name": "Default",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/modernDialog/modern-dialog.stories.ts",
+                    "file": "src/app/dialogs/modernDialog/modern-dialog.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
@@ -3117,7 +3152,7 @@
                     "name": "DialogUpdates",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/modernDialog/modern-dialog.stories.ts",
+                    "file": "src/app/dialogs/modernDialog/modern-dialog.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
@@ -3127,7 +3162,7 @@
                     "name": "meta",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/modernDialog/modern-dialog.stories.ts",
+                    "file": "src/app/dialogs/modernDialog/modern-dialog.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<ModernDialogComponent>",
@@ -3137,19 +3172,19 @@
                     "name": "OpenWithButton",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/modernDialog/modern-dialog.stories.ts",
+                    "file": "src/app/dialogs/modernDialog/modern-dialog.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
                     "defaultValue": "{\n  args: {\n  },\n  render: (args: ModernDialogComponent) => ({\n    props: {\n      ...args,\n      isOpen: true,\n    },\n    template: `\n      <button #button (click)=\"isOpen = !isOpen\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Toggle\n      Dialog\n    </button>\n      <app-dialog *ngIf=\"isOpen\" [previousFocusElement]=\"button\" (onClose)=\"isOpen = false\">\n        <div header>Some content</div>\n        <div body>\n          <p>Some more content</p>\n          <button class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Button that clicks</button>\n        </div>\n      </app-dialog>\n    `,\n  }),\n}"
                 }
             ],
-            "src/app/modernDialogWrap/modern-dialog-wrap.stories.ts": [
+            "src/app/dialogs/modernDialogWrap/modern-dialog-wrap.stories.ts": [
                 {
                     "name": "CloseWithButton",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/modernDialogWrap/modern-dialog-wrap.stories.ts",
+                    "file": "src/app/dialogs/modernDialogWrap/modern-dialog-wrap.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
@@ -3159,7 +3194,7 @@
                     "name": "Default",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/modernDialogWrap/modern-dialog-wrap.stories.ts",
+                    "file": "src/app/dialogs/modernDialogWrap/modern-dialog-wrap.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
@@ -3169,7 +3204,7 @@
                     "name": "DialogUpdates",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/modernDialogWrap/modern-dialog-wrap.stories.ts",
+                    "file": "src/app/dialogs/modernDialogWrap/modern-dialog-wrap.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
@@ -3179,7 +3214,7 @@
                     "name": "meta",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/modernDialogWrap/modern-dialog-wrap.stories.ts",
+                    "file": "src/app/dialogs/modernDialogWrap/modern-dialog-wrap.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<ModernDialogWrapComponent>",
@@ -3189,11 +3224,95 @@
                     "name": "OpenWithButton",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/modernDialogWrap/modern-dialog-wrap.stories.ts",
+                    "file": "src/app/dialogs/modernDialogWrap/modern-dialog-wrap.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
                     "defaultValue": "{\n  args: {\n  },\n  render: (args: ModernDialogWrapComponent) => ({\n    props: {\n      ...args,\n      isOpen: true,\n    },\n    template: `\n      <button #button (click)=\"isOpen = !isOpen\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Toggle\n      Dialog\n    </button>\n      <app-dialog *ngIf=\"isOpen\" [previousFocusElement]=\"button\" (onClose)=\"isOpen = false\">\n        <div header>Some content</div>\n        <div body>\n          <p>Some more content</p>\n          <button class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Button that clicks</button>\n        </div>\n      </app-dialog>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "OpenWithButtonLongContent",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/dialogs/modernDialogWrap/modern-dialog-wrap.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n  },\n  render: (args: ModernDialogWrapComponent) => ({\n    props: {\n      ...args,\n      isOpen: true,\n    },\n    template: `\n      <button #button (click)=\"isOpen = !isOpen\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Toggle\n      Dialog\n    </button>\n      <app-dialog *ngIf=\"isOpen\" [previousFocusElement]=\"button\" (onClose)=\"isOpen = false\">\n        <div header>Some content</div>\n        <div body>\n          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\n          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\n          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\n          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\n          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\n          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\n          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\n          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\n          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\n          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\n          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\n          <button class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Button that clicks</button>\n        </div>\n      </app-dialog>\n    `,\n  }),\n}"
+                }
+            ],
+            "src/app/dialogs/dialogWithLastFocusableItem/dialog-with-last-focusable-element.stories.ts": [
+                {
+                    "name": "CloseWithButton",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/dialogs/dialogWithLastFocusableItem/dialog-with-last-focusable-element.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n  },\n  render: (args: DialogWithLastFousAbleElementComponent) => ({\n    props: {\n      ...args,\n      isOpen: false,\n    },\n    template: `\n      <button #button (click)=\"isOpen = !isOpen\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Toggle\n      Dialog\n    </button>\n      <app-dialog *ngIf=\"isOpen\" [previousFocusElement]=\"button\" (onClose)=\"isOpen = false\">\n        <div header>Some content</div>\n        <div body>\n          <p>Some more content</p>\n          <button class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Button that clicks</button>\n        </div>\n      </app-dialog>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/dialogs/dialogWithLastFocusableItem/dialog-with-last-focusable-element.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n  },\n  render: (args: DialogWithLastFousAbleElementComponent) => ({\n    props: {\n      ...args,\n      isOpen: true,\n    },\n    template: `\n      <app-dialog *ngIf=\"isOpen\" (onClose)=\"isOpen = false\">\n        <div header>Some content</div>\n        <div body>\n          <p>Some more content</p>\n          <button class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Button that clicks</button>\n        </div>\n      </app-dialog>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "DialogUpdates",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/dialogs/dialogWithLastFocusableItem/dialog-with-last-focusable-element.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n  },\n  render: (args: DialogWithLastFousAbleElementComponent) => ({\n    props: {\n      ...args,\n      isOpen: true,\n      updateDialog: false,\n    },\n    template: `\n      <button #button (click)=\"isOpen = !isOpen\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Toggle\n      Dialog\n    </button>\n      <app-dialog *ngIf=\"isOpen\" [previousFocusElement]=\"button\" (onClose)=\"isOpen = false\">\n        <div header *ngIf=\"!updateDialog\">Some content</div>\n        <div body *ngIf=\"!updateDialog\">\n          <p>Some more content</p>\n          <button (click)=\"updateDialog = true\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Activate changes</button>\n        </div>\n\n        <div header *ngIf=\"updateDialog\">Secondary Content Updated</div>\n        <div body *ngIf=\"updateDialog\">\n          <p>Updated content</p>\n          <button (click)=\"updateDialog = false\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Revert Changes</button>\n        </div>\n      </app-dialog>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/dialogs/dialogWithLastFocusableItem/dialog-with-last-focusable-element.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<DialogWithLastFousAbleElementComponent>",
+                    "defaultValue": "{\n  title: 'Components/Dialog with last focusable element',\n  component: DialogWithLastFousAbleElementComponent,\n  tags: ['autodocs'],\n}"
+                },
+                {
+                    "name": "OpenWithButton",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/dialogs/dialogWithLastFocusableItem/dialog-with-last-focusable-element.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n  },\n  render: (args: DialogWithLastFousAbleElementComponent) => ({\n    props: {\n      ...args,\n      isOpen: true,\n    },\n    template: `\n      <button #button (click)=\"isOpen = !isOpen\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Toggle\n      Dialog\n    </button>\n      <app-dialog *ngIf=\"isOpen\" [previousFocusElement]=\"button\" (onClose)=\"isOpen = false\">\n        <div header>Some content</div>\n        <div body>\n          <p>Some more content</p>\n          <button class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Button that clicks</button>\n        </div>\n      </app-dialog>\n    `,\n  }),\n}"
+                }
+            ],
+            "src/app/carousel/tabs/tabs.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/carousel/tabs/tabs.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n  },\n  render: (args: TabsComponent) => ({\n    props: {\n      ...args,\n    },\n    template: `\n      <app-tabs></app-tabs>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/carousel/tabs/tabs.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<TabsComponent>",
+                    "defaultValue": "{\n  title: 'Components/Caurousel/Tabs',\n  component: TabsComponent,\n  tags: ['autodocs'],\n}"
                 }
             ],
             "src/stories/Button.stories.ts": [
@@ -3367,65 +3486,78 @@
                     "kind": 180
                 }
             ],
-            "src/app/dialog/dialog.stories.ts": [
+            "src/app/carousel/tabs/tabs.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<TabsComponent>",
+                    "file": "src/app/carousel/tabs/tabs.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 180
+                }
+            ],
+            "src/app/dialogs/dialog/dialog.stories.ts": [
                 {
                     "name": "Story",
                     "ctype": "miscellaneous",
                     "subtype": "typealias",
                     "rawtype": "StoryObj<DialogComponent>",
-                    "file": "src/app/dialog/dialog.stories.ts",
+                    "file": "src/app/dialogs/dialog/dialog.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
                     "kind": 180
                 }
             ],
-            "src/app/modal/modal.stories.ts": [
+            "src/app/dialogs/modal/modal.stories.ts": [
                 {
                     "name": "Story",
                     "ctype": "miscellaneous",
                     "subtype": "typealias",
                     "rawtype": "StoryObj<Modal>",
-                    "file": "src/app/modal/modal.stories.ts",
+                    "file": "src/app/dialogs/modal/modal.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
                     "kind": 180
                 }
             ],
-            "src/app/dialogWithLastFocusableItem/dialog-with-last-focusable-element.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<DialogWithLastFousAbleElementComponent>",
-                    "file": "src/app/dialogWithLastFocusableItem/dialog-with-last-focusable-element.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 180
-                }
-            ],
-            "src/app/modernDialog/modern-dialog.stories.ts": [
+            "src/app/dialogs/modernDialog/modern-dialog.stories.ts": [
                 {
                     "name": "Story",
                     "ctype": "miscellaneous",
                     "subtype": "typealias",
                     "rawtype": "StoryObj<ModernDialogComponent>",
-                    "file": "src/app/modernDialog/modern-dialog.stories.ts",
+                    "file": "src/app/dialogs/modernDialog/modern-dialog.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
                     "kind": 180
                 }
             ],
-            "src/app/modernDialogWrap/modern-dialog-wrap.stories.ts": [
+            "src/app/dialogs/modernDialogWrap/modern-dialog-wrap.stories.ts": [
                 {
                     "name": "Story",
                     "ctype": "miscellaneous",
                     "subtype": "typealias",
                     "rawtype": "StoryObj<ModernDialogWrapComponent>",
-                    "file": "src/app/modernDialogWrap/modern-dialog-wrap.stories.ts",
+                    "file": "src/app/dialogs/modernDialogWrap/modern-dialog-wrap.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 180
+                }
+            ],
+            "src/app/dialogs/dialogWithLastFocusableItem/dialog-with-last-focusable-element.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<DialogWithLastFousAbleElementComponent>",
+                    "file": "src/app/dialogs/dialogWithLastFocusableItem/dialog-with-last-focusable-element.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -3468,7 +3600,36 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/dialog/dialog.component.ts",
+                "filePath": "src/app/carousel/tabs/tabs.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "TabsComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/carousel/tabs/tabs.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/carousel/tabs/tabs.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/dialogs/dialog/dialog.component.ts",
                 "type": "component",
                 "linktype": "component",
                 "name": "DialogComponent",
@@ -3477,7 +3638,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/dialog/dialog.stories.ts",
+                "filePath": "src/app/dialogs/dialog/dialog.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -3487,7 +3648,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/dialog/dialog.stories.ts",
+                "filePath": "src/app/dialogs/dialog/dialog.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -3497,7 +3658,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/dialog/dialog.stories.ts",
+                "filePath": "src/app/dialogs/dialog/dialog.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -3507,7 +3668,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/dialog/dialog.stories.ts",
+                "filePath": "src/app/dialogs/dialog/dialog.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -3517,7 +3678,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/dialog/dialog.stories.ts",
+                "filePath": "src/app/dialogs/dialog/dialog.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -3527,7 +3688,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/dialogWithLastFocusableItem/dialog-with-last-focusable-element.component.ts",
+                "filePath": "src/app/dialogs/dialogWithLastFocusableItem/dialog-with-last-focusable-element.component.ts",
                 "type": "component",
                 "linktype": "component",
                 "name": "DialogWithLastFousAbleElementComponent",
@@ -3536,7 +3697,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/dialogWithLastFocusableItem/dialog-with-last-focusable-element.stories.ts",
+                "filePath": "src/app/dialogs/dialogWithLastFocusableItem/dialog-with-last-focusable-element.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -3546,7 +3707,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/dialogWithLastFocusableItem/dialog-with-last-focusable-element.stories.ts",
+                "filePath": "src/app/dialogs/dialogWithLastFocusableItem/dialog-with-last-focusable-element.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -3556,7 +3717,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/dialogWithLastFocusableItem/dialog-with-last-focusable-element.stories.ts",
+                "filePath": "src/app/dialogs/dialogWithLastFocusableItem/dialog-with-last-focusable-element.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -3566,7 +3727,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/dialogWithLastFocusableItem/dialog-with-last-focusable-element.stories.ts",
+                "filePath": "src/app/dialogs/dialogWithLastFocusableItem/dialog-with-last-focusable-element.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -3576,7 +3737,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/dialogWithLastFocusableItem/dialog-with-last-focusable-element.stories.ts",
+                "filePath": "src/app/dialogs/dialogWithLastFocusableItem/dialog-with-last-focusable-element.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -3586,7 +3747,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/modal/modal.component.ts",
+                "filePath": "src/app/dialogs/modal/modal.component.ts",
                 "type": "component",
                 "linktype": "component",
                 "name": "Modal",
@@ -3595,7 +3756,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/modal/modal.stories.ts",
+                "filePath": "src/app/dialogs/modal/modal.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -3605,7 +3766,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/modal/modal.stories.ts",
+                "filePath": "src/app/dialogs/modal/modal.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -3615,7 +3776,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/modal/modal.stories.ts",
+                "filePath": "src/app/dialogs/modal/modal.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -3625,7 +3786,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/modal/modal.stories.ts",
+                "filePath": "src/app/dialogs/modal/modal.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -3635,7 +3796,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/modal/modal.stories.ts",
+                "filePath": "src/app/dialogs/modal/modal.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -3645,7 +3806,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/modernDialog/modern-dialog.component.ts",
+                "filePath": "src/app/dialogs/modernDialog/modern-dialog.component.ts",
                 "type": "component",
                 "linktype": "component",
                 "name": "ModernDialogComponent",
@@ -3654,7 +3815,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/modernDialog/modern-dialog.stories.ts",
+                "filePath": "src/app/dialogs/modernDialog/modern-dialog.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -3664,7 +3825,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/modernDialog/modern-dialog.stories.ts",
+                "filePath": "src/app/dialogs/modernDialog/modern-dialog.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -3674,7 +3835,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/modernDialog/modern-dialog.stories.ts",
+                "filePath": "src/app/dialogs/modernDialog/modern-dialog.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -3684,7 +3845,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/modernDialog/modern-dialog.stories.ts",
+                "filePath": "src/app/dialogs/modernDialog/modern-dialog.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -3694,7 +3855,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/modernDialog/modern-dialog.stories.ts",
+                "filePath": "src/app/dialogs/modernDialog/modern-dialog.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -3704,7 +3865,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/modernDialogWrap/modern-dialog-wrap.component.ts",
+                "filePath": "src/app/dialogs/modernDialogWrap/modern-dialog-wrap.component.ts",
                 "type": "component",
                 "linktype": "component",
                 "name": "ModernDialogWrapComponent",
@@ -3713,7 +3874,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/modernDialogWrap/modern-dialog-wrap.stories.ts",
+                "filePath": "src/app/dialogs/modernDialogWrap/modern-dialog-wrap.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -3723,7 +3884,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/modernDialogWrap/modern-dialog-wrap.stories.ts",
+                "filePath": "src/app/dialogs/modernDialogWrap/modern-dialog-wrap.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -3733,7 +3894,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/modernDialogWrap/modern-dialog-wrap.stories.ts",
+                "filePath": "src/app/dialogs/modernDialogWrap/modern-dialog-wrap.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -3743,7 +3904,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/modernDialogWrap/modern-dialog-wrap.stories.ts",
+                "filePath": "src/app/dialogs/modernDialogWrap/modern-dialog-wrap.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -3753,11 +3914,21 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/modernDialogWrap/modern-dialog-wrap.stories.ts",
+                "filePath": "src/app/dialogs/modernDialogWrap/modern-dialog-wrap.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "OpenWithButton",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/dialogs/modernDialogWrap/modern-dialog-wrap.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "OpenWithButtonLongContent",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
