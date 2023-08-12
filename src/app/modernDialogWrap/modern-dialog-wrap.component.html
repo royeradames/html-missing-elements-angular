@@ -16,8 +16,11 @@
     <ng-content select="[body]"></ng-content>
     <ng-content select="[footer]"></ng-content>
   </div>
-  <button #lastElement
-          (click)="focusOnFirstElement()"
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded absolute left-[calc(-100vw-100px)] focus:left-0 focus:bottom-0">
-    <span class="sr-only">Go to beginning</span><span aria-hidden="true">^</span></button>
+  <div class="relative">
+    <button #lastElement
+            (click)="focusOnFirstElement()"
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded absolute left-[calc(-100vw-100px)] focus:left-0 focus:bottom-0">
+      <span class="sr-only">Go to beginning</span><span aria-hidden="true">^</span></button>
+  </div>
+
 </dialog>
