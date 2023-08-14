@@ -20,7 +20,7 @@ import { TabsComponent } from './carousel/tabs/tabs.component';
     Modal,
     ModernDialogComponent,
     ModernDialogWrapComponent,
-    TabsComponent
+    TabsComponent,
   ],
   imports: [
     BrowserModule
