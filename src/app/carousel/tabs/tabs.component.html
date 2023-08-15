@@ -1,22 +1,25 @@
 <section aria-label="Highlighted Attractions" aria-roledescription="carousel">
-  <div id="controls" class="grid gap-3 justify-items-end sm:justify-items-start sm:gap-0 sm:grid-flow-col ">
-    <button [ngClass]="{'pause' : isPause.value, 'play': !isPause.value}"
+  <div class="grid gap-3 justify-items-end sm:justify-items-start sm:gap-0 sm:grid-flow-col " id="controls">
+    <button (click)="isPause.next(!isPause.value)"
+            [ngClass]="{'pause' : isPause.value, 'play': !isPause.value}"
             class="rotation flex justify-center items-center bg-black bg-opacity-60 rounded-md w-9 h-9 shadow-lg focus:outline-none focus:border-blue-400"
-            (click)="isPause.next(!isPause.value)"
             type="button">
       <span class="sr-only">
         {{pauseButtonLabel}}
       </span>
       <svg class="w-6 h-6" fill="white" stroke="white" viewBox="0 0 24 24">
-        <path *ngIf="isPause.value" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M6 4h4v16H6zM14 4h4v16h-4z"></path>
-        <path *ngIf="!isPause.value" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M18 12L6 4v16l12-8z"></path>
+        <path *ngIf="isPause.value" d="M6 4h4v16H6zM14 4h4v16h-4z" stroke-linecap="round" stroke-linejoin="round"
+              stroke-width="2"></path>
+        <path *ngIf="!isPause.value" d="M18 12L6 4v16l12-8z" stroke-linecap="round" stroke-linejoin="round"
+              stroke-width="2"></path>
       </svg>
     </button>
     <div class="w-100 flex center justify-content-center vw-100">
-      <div aria-label="Slides" class="tab-wrapper bg-black bg-opacity-60 rounded-full grid py-3 sm: py-0 sm:flex sm:px-3">
+      <div aria-label="Slides"
+           class="tab-wrapper bg-black bg-opacity-60 rounded-full grid py-3 sm: py-0 sm:flex sm:px-3">
         <button (focus)="activate()"
+                (mouseenter)="mouseHoversInTab(slide.id)"
+                (mouseleave)="mouseLeftHoversInTab(slide.id)"
                 *ngFor="let slide of carouselItems"
                 aria-controls="{{getIdRef(slide.id)}}"
                 aria-label="Slide X"
@@ -25,10 +28,14 @@
            <span class="sr-only">
             {{slide.captionTitle}}
           </span>
-          <svg width="34" height="34" version="1.1" xmlns="http://www.w3.org/2000/svg">
-            <circle class="border" cx="16" cy="15" r="10"></circle>
+          <svg height="34" version="1.1" width="34" xmlns="http://www.w3.org/2000/svg">
+            <circle class="border stroke-white fill-white" cx="16" cy="15" r="10"></circle>
             <circle class="tab-background" cx="16" cy="15" r="8"></circle>
-            <circle class="tab" cx="16" cy="15" r="6"></circle>
+            <circle [ngClass]="{'fill-blue-600': currentHoverTab === slide.id}"
+                    class="tab hover:fill-blue-600"
+                    cx="16"
+                    cy="15"
+                    r="6"></circle>
           </svg>
 
         </button>
