@@ -1,5 +1,5 @@
 <section aria-label="Highlighted Attractions" aria-roledescription="carousel">
-  <div class="controls flex">
+  <div id="controls" class="grid gap-3 justify-items-end sm:justify-items-start sm:gap-0 sm:grid-flow-col ">
     <button [ngClass]="{'pause' : isPause.value, 'play': !isPause.value}"
             class="rotation flex justify-center items-center bg-black bg-opacity-60 rounded-md w-9 h-9 shadow-lg focus:outline-none focus:border-blue-400"
             (click)="isPause.next(!isPause.value)"
@@ -15,7 +15,7 @@
       </svg>
     </button>
     <div class="w-100 flex center justify-content-center vw-100">
-      <div aria-label="Slides" class="tab-wrapper bg-black bg-opacity-60 rounded-full flex px-3">
+      <div aria-label="Slides" class="tab-wrapper bg-black bg-opacity-60 rounded-full grid py-3 sm: py-0 sm:flex sm:px-3">
         <button (focus)="activate()"
                 *ngFor="let slide of carouselItems"
                 aria-controls="{{getIdRef(slide.id)}}"
