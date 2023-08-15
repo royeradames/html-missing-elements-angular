@@ -1,5 +1,5 @@
 <section aria-label="Highlighted Attractions" aria-roledescription="carousel">
-  <div class="controls">
+  <div class="controls flex">
     <button [ngClass]="{'pause' : isPause.value, 'play': !isPause.value}"
             class="rotation flex justify-center items-center bg-black bg-opacity-60 rounded-md w-9 h-9 shadow-lg focus:outline-none focus:border-blue-400"
             (click)="isPause.next(!isPause.value)"
@@ -14,19 +14,23 @@
               d="M18 12L6 4v16l12-8z"></path>
       </svg>
     </button>
-    <div class="tab-wrapper">
-      <div aria-label="Slides">
+    <div class="w-100 flex center justify-content-center vw-100">
+      <div aria-label="Slides" class="tab-wrapper bg-black bg-opacity-60 rounded-full flex px-3">
         <button (focus)="activate()"
                 *ngFor="let slide of carouselItems"
                 aria-controls="{{getIdRef(slide.id)}}"
                 aria-label="Slide X"
                 aria-selected="false"
                 tabindex="-1">
-          <svg height="34" version="1.1" width="34" xmlns="http://www.w3.org/2000/svg">
+           <span class="sr-only">
+            {{slide.captionTitle}}
+          </span>
+          <svg width="34" height="34" version="1.1" xmlns="http://www.w3.org/2000/svg">
             <circle class="border" cx="16" cy="15" r="10"></circle>
             <circle class="tab-background" cx="16" cy="15" r="8"></circle>
             <circle class="tab" cx="16" cy="15" r="6"></circle>
           </svg>
+
         </button>
       </div>
     </div>
