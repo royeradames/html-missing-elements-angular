@@ -18,12 +18,11 @@
       <div aria-label="Slides"
            class="tab-wrapper bg-black bg-opacity-60 rounded-full grid py-3 sm: py-0 sm:flex sm:px-3">
         <button (focus)="activate()"
-                (mouseenter)="mouseHoversInTab(slide.id)"
-                (mouseleave)="mouseLeftHoversInTab(slide.id)"
                 *ngFor="let slide of carouselItems"
                 aria-controls="{{getIdRef(slide.id)}}"
                 aria-label="Slide X"
                 aria-selected="false"
+                class="hover:fill-blue-600"
                 tabindex="-1">
            <span class="sr-only">
             {{slide.captionTitle}}
@@ -31,13 +30,12 @@
           <svg height="34" version="1.1" width="34" xmlns="http://www.w3.org/2000/svg">
             <circle class="border stroke-white fill-white" cx="16" cy="15" r="10"></circle>
             <circle class="tab-background" cx="16" cy="15" r="8"></circle>
-            <circle [ngClass]="{'fill-blue-600': currentHoverTab === slide.id}"
-                    class="tab hover:fill-blue-600"
-                    cx="16"
-                    cy="15"
-                    r="6"></circle>
+            <circle
+              class="tab"
+              cx="16"
+              cy="15"
+              r="6"></circle>
           </svg>
-
         </button>
       </div>
     </div>

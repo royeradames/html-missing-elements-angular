@@ -103,7 +103,6 @@ export class TabsComponent implements OnInit{
   // If operating system preferences have been set for reduced motion or disabling animations, the auto-rotation is initially paused.
   isPause = new BehaviorSubject<boolean>(false);
   pauseButtonLabel!: string;
-  currentHoverTab? = 0;
 
   constructor() {
     // If operating system preferences have been set for reduced motion or disabling animations, the auto-rotation is initially paused.
@@ -132,15 +131,5 @@ export class TabsComponent implements OnInit{
 
   getIdRef(id: SlideInterface['id']) {
     return 'carousel-item-' + id;
-  }
-
-
-  mouseHoversInTab(id: SlideInterface['id']) {
-    this.currentHoverTab = id;
-  }
-
-  mouseLeftHoversInTab(id: SlideInterface['id']) {
-    if(!(this.currentHoverTab === id)) return;
-    this.currentHoverTab = 0;
   }
 }
