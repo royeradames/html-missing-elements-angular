@@ -17,13 +17,15 @@
     <div class="w-100 flex center justify-content-center vw-100">
       <div aria-label="Slides"
            class="tab-wrapper bg-black bg-opacity-60 rounded-full grid py-3 sm: py-0 sm:flex sm:px-3">
-        <button (focus)="activate()"
+        <button #slideTab
+                (click)="handleSlideTabClick($event, slideTab ,slide)"
+                (focus)="activate()"
                 *ngFor="let slide of carouselItems"
+                [attr.tabindex]="-1"
                 aria-controls="{{getIdRef(slide.id)}}"
                 aria-label="Slide X"
                 aria-selected="false"
-                class="hover:fill-blue-600"
-                tabindex="-1">
+                class="hover:fill-blue-600">
            <span class="sr-only">
             {{slide.captionTitle}}
           </span>
