@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {BehaviorSubject} from "rxjs";
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {BehaviorSubject, Subject, switchMap, takeUntil, timer} from "rxjs";
 
 interface SlideInterface {
   id: number,
@@ -14,7 +14,7 @@ interface SlideInterface {
 @Component({
   selector: 'app-tabs', templateUrl: './tabs.component.html', styleUrls: ['./tabs.component.css']
 })
-export class TabsComponent implements OnInit{
+export class TabsComponent implements OnInit, OnDestroy{
   carouselItems: SlideInterface[] = [
     {
     id: 1,
@@ -103,6 +103,8 @@ export class TabsComponent implements OnInit{
   // If operating system preferences have been set for reduced motion or disabling animations, the auto-rotation is initially paused.
   isPause = new BehaviorSubject<boolean>(false);
   pauseButtonLabel!: string;
+  // This subject will emit when the component is destroyed.
+  private destroy$ = new Subject<void>();
 
   constructor() {
     // If operating system preferences have been set for reduced motion or disabling animations, the auto-rotation is initially paused.
@@ -115,6 +117,18 @@ export class TabsComponent implements OnInit{
         this.handlePauseButtonLabel(isPause);
       }
     );
+    this.selectedSlide = this.carouselItems[0]
+    this.isPause
+      .pipe(
+        switchMap(isPause =>
+          isPause ? new Subject<void>() : timer(5000).pipe(switchMap(() => {
+            this.selectedSlide = this.nextSlide();
+            return new Subject<void>(); // Return a non-emitting observable after updating the slide.
+          }))
+        ),
+        takeUntil(this.destroy$) // Ensure we unsubscribe when the component is destroyed.
+      )
+      .subscribe();
     }
 
   handlePauseButtonLabel(isPause: boolean) {
@@ -131,5 +145,11 @@ export class TabsComponent implements OnInit{
 
   getIdRef(id: SlideInterface['id']) {
     return 'carousel-item-' + id;
+  }
+
+  ngOnDestroy(): void {
+    // Emit a value when the component is destroyed.
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
