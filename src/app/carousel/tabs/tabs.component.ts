@@ -131,6 +131,12 @@ export class TabsComponent implements OnInit, OnDestroy{
       .subscribe();
     }
 
+    nextSlide(){
+      const index = this.carouselItems.findIndex((slide) => slide.id === this.selectedSlide?.id);
+      const nextSlide = this.carouselItems[index + 1];
+      return nextSlide ? nextSlide : this.carouselItems[0];
+
+    }
   handlePauseButtonLabel(isPause: boolean) {
     this.pauseButtonLabel = isPause ? 'End Automatic slide show' : 'Start Automatic slide show';
   }
