@@ -45,5 +45,25 @@
   <!--  e.g., "Slide 1 of 6"-->
   <div [attr.aria-live]="handleSlidesAnnouncement()" aria-label="x of Y" aria-roledescription="slide">
     <!--slide content goes here-->
+    <div *ngFor="let slide of carouselItems; let i = index"
+         [ngClass]="{'hidden': selectedSlide != slide}"
+         class="max-h-400 max-w-900 relative overflow-hidden w-full"
+         aria-roledescription="slide"
+         attr.aria-label="{{i + 1}} of {{carouselItems.length}}"
+         id="carousel-item-{{i + 1}}"
+         role="tabpanel">
+      <div id="carousel-img">
+        <a href="{{slide.href}}" id="carousel-img-{{i +1}}">
+          <figure class="relative flex justify-center">
+            <img src="{{slide.imgSrc}}" alt="{{slide.alt}}">
+            <figcaption class="absolute bottom-0 left-[15%] right-[15%] text-white text-center py-5 grid gap-2 justify-items-center">
+              <h3 class="text-2xl font-bold bg-opacity-60 bg-black rounded-md p-2">{{slide.captionTitle}}</h3>
+              <p class="text-lg bg-opacity-60 bg-black rounded-md p-2">{{slide.captionDescription}}</p>
+            </figcaption>
+          </figure>
+        </a>
+      </div>
+
+    </div>
   </div>
 </section>
