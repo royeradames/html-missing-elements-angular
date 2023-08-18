@@ -88,15 +88,6 @@ export class TabsComponent implements OnInit, OnDestroy{
       captionTitle: 'Caption title 8',
       captionDescription: 'Caption description 8'
     },
-    {
-      id: 9,
-      href: '#',
-      imgSrc: 'https://picsum.photos/id/245/200/300',
-      alt: 'Image description 9',
-      captionHref: '#',
-      captionTitle: 'Caption title 9',
-      captionDescription: 'Caption description 9'
-    },
   ];
   isAutoPlayOn?: boolean;
   selectedSlide?: SlideInterface;
