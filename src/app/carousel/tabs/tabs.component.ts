@@ -81,7 +81,7 @@ export class TabsComponent implements OnInit, OnDestroy {
     captionDescription: 'Caption description 8'
   },];
   isAutoPlayOn?: boolean;
-  selectedSlide?: SlideInterface;
+  selectedSlide = this.carouselItems[0];
   // If operating system preferences have been set for reduced motion or disabling animations, the auto-rotation is initially paused.
   isPause = new BehaviorSubject<boolean>(false);
   pauseButtonLabel!: string;
@@ -89,17 +89,11 @@ export class TabsComponent implements OnInit, OnDestroy {
   // This subject will emit when the component is destroyed.
   private destroy$ = new Subject<void>();
 
-  constructor() {
-    // If operating system preferences have been set for reduced motion or disabling animations, the auto-rotation is initially paused.
-    // isPause = false;
-  }
-
   ngOnInit(): void {
     this.handlePauseButtonLabel(this.isPause.value)
     this.isPause.subscribe((isPause) => {
       this.handlePauseButtonLabel(isPause);
     });
-    this.selectedSlide = this.carouselItems[0]
     this.isPause
       .pipe(switchMap(isPause => isPause ? new Subject<void>() : timer(5000).pipe(switchMap(() => {
           this.selectedSlide = this.nextSlide();
@@ -110,10 +104,14 @@ export class TabsComponent implements OnInit, OnDestroy {
   }
 
   nextSlide() {
-    const index = this.carouselItems.findIndex((slide) => slide.id === this.selectedSlide?.id);
+    const index = this.slideIndex(this.selectedSlide)
     const nextSlide = this.carouselItems[index + 1];
     return nextSlide ? nextSlide : this.carouselItems[0];
 
+  }
+
+  slideIndex(slide: SlideInterface) {
+    return this.carouselItems.findIndex((item) => item.id === slide.id);
   }
 
   handlePauseButtonLabel(isPause: boolean) {
@@ -159,13 +157,14 @@ export class TabsComponent implements OnInit, OnDestroy {
   }
 
   previousSlide() {
-    const index = this.carouselItems.findIndex((slide) => slide.id === this.selectedSlide?.id);
+    const index = this.slideIndex(this.selectedSlide)
     const previousSlide = this.carouselItems[index - 1];
     return previousSlide ? previousSlide : this.carouselItems[this.carouselItems.length - 1];
   }
+
   currentTabElement() {
     const previousTabElement: HTMLElement | null = document.querySelector('#carousel-tab-' + this.selectedSlide?.id);
-    if(!previousTabElement) return;
+    if (!previousTabElement) return;
     return previousTabElement
   }
 }

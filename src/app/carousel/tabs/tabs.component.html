@@ -27,9 +27,9 @@
                 (click)="handleSlideTabClick($event, slideTab ,slide)"
                 *ngFor="let slide of carouselItems"
                 [attr.aria-controls]="getIdRef(slide.id)"
+                [attr.aria-selected]="false"
                 [attr.tabindex]="activate(slide)"
-                aria-label="Slide X"
-                aria-selected="false"
+                attr.aria-label="Slide {{slide.id}}"
                 class="hover:fill-blue-600"
                 id="carousel-tab-{{slide.id}}">
            <span class="sr-only">
@@ -51,7 +51,9 @@
 
   <!--  where all the slides live on-->
   <!--  e.g., "Slide 1 of 6"-->
-  <div [attr.aria-live]="handleSlidesAnnouncement()" aria-label="x of Y" aria-roledescription="slide">
+  <div [attr.aria-live]="handleSlidesAnnouncement()"
+       aria-roledescription="slide"
+       attr.aria-label="{{slideIndex(selectedSlide)}} of {{carouselItems.length}}">
     <!--slide content goes here-->
     <div *ngFor="let slide of carouselItems; let i = index"
          [ngClass]="{'hidden': selectedSlide != slide}"
@@ -71,7 +73,6 @@
           </figure>
         </a>
       </div>
-
     </div>
   </div>
 </section>
