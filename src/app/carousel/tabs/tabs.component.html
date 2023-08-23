@@ -1,10 +1,11 @@
 <section (mouseenter)="isPause.next(true)"
-         class="relative"
          aria-label="Highlighted Attractions"
-         aria-roledescription="carousel">
-  <div class="absolute top-0 z-10 w-full p-5 grid gap-3 justify-items-end sm:justify-items-start sm:gap-0 sm:grid-flow-col " id="controls">
-    <button (click)="isPause.next(true)"
-            [ngClass]="{'pause' : isPause.value, 'play': !isPause.value}"
+         aria-roledescription="carousel"
+         class="relative">
+  <div class="absolute top-0 z-10 w-full p-5 grid gap-3 justify-items-end sm:justify-items-start sm:gap-0 sm:grid-flow-col "
+       id="controls">
+    <button (click)="isPause.next(false)"
+            [ngClass]="{'pause' : !isPause.value, 'play': isPause.value}"
             class="rotation flex justify-center items-center bg-black bg-opacity-60 rounded-md w-9 h-9 shadow-lg focus:outline-black focus:border-blue-400"
             type="button">
       <span class="sr-only">
@@ -18,19 +19,19 @@
       </svg>
     </button>
     <div class="w-100 flex center justify-content-center vw-100">
-      <div aria-label="Slides"
-           (keydown.arrowLeft)="handleArrowLeft($event)"
-            (keydown.arrowRight)="handleArrowRight($event)"
+      <div (keydown.arrowLeft)="handleArrowLeft($event)"
+           (keydown.arrowRight)="handleArrowRight($event)"
+           aria-label="Slides"
            class="tab-wrapper bg-black bg-opacity-60 rounded-full grid py-3 sm: py-0 sm:flex sm:px-3">
         <button #slideTab
                 (click)="handleSlideTabClick($event, slideTab ,slide)"
                 *ngFor="let slide of carouselItems"
+                [attr.aria-controls]="getIdRef(slide.id)"
                 [attr.tabindex]="activate(slide)"
-                aria-controls="{{getIdRef(slide.id)}}"
                 aria-label="Slide X"
                 aria-selected="false"
-                id="carousel-tab-{{slide.id}}"
-                class="hover:fill-blue-600">
+                class="hover:fill-blue-600"
+                id="carousel-tab-{{slide.id}}">
            <span class="sr-only">
             {{slide.captionTitle}}
           </span>
@@ -54,15 +55,15 @@
     <!--slide content goes here-->
     <div *ngFor="let slide of carouselItems; let i = index"
          [ngClass]="{'hidden': selectedSlide != slide}"
-         class="max-h-400 max-w-900 relative overflow-hidden w-full"
          aria-roledescription="slide"
          attr.aria-label="{{i + 1}} of {{carouselItems.length}}"
+         class="max-h-400 max-w-900 relative overflow-hidden w-full"
          id="carousel-item-{{i + 1}}"
          role="tabpanel">
       <div id="carousel-img">
         <a href="{{slide.href}}" id="carousel-img-{{i +1}}">
           <figure class="relative flex justify-center">
-            <img src="{{slide.imgSrc}}" alt="{{slide.alt}}">
+            <img alt="{{slide.alt}}" src="{{slide.imgSrc}}">
             <figcaption class="absolute bottom-0 left-[15%] right-[15%] text-white text-center py-5 grid gap-2 justify-items-center">
               <h3 class="text-2xl font-bold bg-opacity-60 bg-black rounded-md p-2">{{slide.captionTitle}}</h3>
               <p class="text-lg bg-opacity-60 bg-black rounded-md p-2">{{slide.captionDescription}}</p>
