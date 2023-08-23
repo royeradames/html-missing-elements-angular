@@ -1,8 +1,11 @@
-<section aria-label="Highlighted Attractions" aria-roledescription="carousel">
-  <div class="grid gap-3 justify-items-end sm:justify-items-start sm:gap-0 sm:grid-flow-col " id="controls">
-    <button (click)="isPause.next(!isPause.value)"
+<section (mouseenter)="isPause.next(true)"
+         class="relative"
+         aria-label="Highlighted Attractions"
+         aria-roledescription="carousel">
+  <div class="absolute top-0 z-10 w-full p-5 grid gap-3 justify-items-end sm:justify-items-start sm:gap-0 sm:grid-flow-col " id="controls">
+    <button (click)="isPause.next(true)"
             [ngClass]="{'pause' : isPause.value, 'play': !isPause.value}"
-            class="rotation flex justify-center items-center bg-black bg-opacity-60 rounded-md w-9 h-9 shadow-lg focus:outline-none focus:border-blue-400"
+            class="rotation flex justify-center items-center bg-black bg-opacity-60 rounded-md w-9 h-9 shadow-lg focus:outline-black focus:border-blue-400"
             type="button">
       <span class="sr-only">
         {{pauseButtonLabel}}
@@ -16,15 +19,17 @@
     </button>
     <div class="w-100 flex center justify-content-center vw-100">
       <div aria-label="Slides"
+           (keydown.arrowLeft)="handleArrowLeft($event)"
+            (keydown.arrowRight)="handleArrowRight($event)"
            class="tab-wrapper bg-black bg-opacity-60 rounded-full grid py-3 sm: py-0 sm:flex sm:px-3">
         <button #slideTab
                 (click)="handleSlideTabClick($event, slideTab ,slide)"
-                (focus)="activate()"
                 *ngFor="let slide of carouselItems"
-                [attr.tabindex]="-1"
+                [attr.tabindex]="activate(slide)"
                 aria-controls="{{getIdRef(slide.id)}}"
                 aria-label="Slide X"
                 aria-selected="false"
+                id="carousel-tab-{{slide.id}}"
                 class="hover:fill-blue-600">
            <span class="sr-only">
             {{slide.captionTitle}}

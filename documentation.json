@@ -3,12 +3,12 @@
     "interfaces": [
         {
             "name": "SlideInterface",
-            "id": "interface-SlideInterface-e7c4feb95061d82141bfcd2162192426cd8fa768ea5e0800a3dee0fb45bca9c14c34a9e03648324bfffb9e51c4d17e3ade3434b4b3df5025662c38928023e169",
+            "id": "interface-SlideInterface-66c979e104e142e596903639106b47bb5c7db13ab676d7078f8371d8a1dc2815e40f94c9125bd8fdbd551cb2ad111d49de6d1606de99e898d67ab65c2fa68996",
             "file": "src/app/carousel/tabs/tabs.component.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "interface",
-            "sourceCode": "import {Component, OnInit} from '@angular/core';\nimport {BehaviorSubject} from \"rxjs\";\n\ninterface SlideInterface {\n  id: number,\n  href: string,\n  imgSrc: string,\n  alt: string,\n  captionHref: string,\n  captionTitle: string,\n  captionDescription: string\n}\n\n@Component({\n  selector: 'app-tabs', templateUrl: './tabs.component.html', styleUrls: ['./tabs.component.css']\n})\nexport class TabsComponent implements OnInit{\n  carouselItems: SlideInterface[] = [{\n    id: 1,\n    href: '#',\n    imgSrc: 'https://picsum.photos/id/237/200/300',\n    alt: 'Image description 1',\n    captionHref: '#',\n    captionTitle: 'Caption title 1',\n    captionDescription: 'Caption description 1'\n  }, // ... Add other carousel items here\n  ];\n  isAutoPlayOn?: boolean;\n  selectedSlide?: SlideInterface;\n  // If operating system preferences have been set for reduced motion or disabling animations, the auto-rotation is initially paused.\n  isPause = new BehaviorSubject<boolean>(false);\n  pauseButtonLabel!: string;\n\n  constructor() {\n    // If operating system preferences have been set for reduced motion or disabling animations, the auto-rotation is initially paused.\n    // isPause = false;\n  }\n\n  ngOnInit(): void {\n      this.handlePauseButtonLabel(this.isPause.value)\n      this.isPause.subscribe((isPause) => {\n        this.handlePauseButtonLabel(isPause);\n      }\n    );\n    }\n\n  handlePauseButtonLabel(isPause: boolean) {\n    this.pauseButtonLabel = isPause ? 'End Automatic slide show' : 'Start Automatic slide show';\n  }\n\n  handleSlidesAnnouncement(): 'off' | \"polite\" {\n    return this.isAutoPlayOn ? 'off' : 'polite';\n  }\n\n  activate() {\n    // activate the slide\n  }\n\n  getIdRef(id: SlideInterface['id']) {\n    return 'carousel-item-' + id;\n  }\n\n\n}\n",
+            "sourceCode": "import {Component, OnDestroy, OnInit} from '@angular/core';\nimport {BehaviorSubject, Subject, switchMap, takeUntil, timer} from \"rxjs\";\n\ninterface SlideInterface {\n  id: number,\n  href: string,\n  imgSrc: string,\n  alt: string,\n  captionHref: string,\n  captionTitle: string,\n  captionDescription: string\n}\n\n@Component({\n  selector: 'app-tabs', templateUrl: './tabs.component.html', styleUrls: ['./tabs.component.css']\n})\nexport class TabsComponent implements OnInit, OnDestroy{\n  carouselItems: SlideInterface[] = [\n    {\n    id: 1,\n    href: '#',\n    imgSrc: 'https://picsum.photos/id/237/1280',\n    alt: 'Image description 1',\n    captionHref: '#',\n    captionTitle: 'Caption title 1',\n    captionDescription: 'Caption description 1'\n  },\n    {\n      id: 2,\n      href: '#',\n      imgSrc: 'https://picsum.photos/id/238/1280',\n      alt: 'Image description 2',\n      captionHref: '#',\n      captionTitle: 'Caption title 2',\n      captionDescription: 'Caption description 2'\n    },\n    {\n      id: 3,\n      href: '#',\n      imgSrc: 'https://picsum.photos/id/239/1280',\n      alt: 'Image description 3',\n      captionHref: '#',\n      captionTitle: 'Caption title 3',\n      captionDescription: 'Caption description 3'\n    },\n    {\n      id: 4,\n      href: '#',\n      imgSrc: 'https://picsum.photos/id/240/1280',\n      alt: 'Image description 4',\n      captionHref: '#',\n      captionTitle: 'Caption title 4',\n      captionDescription: 'Caption description 4'\n    },\n    {\n      id: 5,\n      href: '#',\n      imgSrc: 'https://picsum.photos/id/241/1280',\n      alt: 'Image description 5',\n      captionHref: '#',\n      captionTitle: 'Caption title 5',\n      captionDescription: 'Caption description 5'\n    },\n    {\n      id: 6,\n      href: '#',\n      imgSrc: 'https://picsum.photos/id/242/1280',\n      alt: 'Image description 6',\n      captionHref: '#',\n      captionTitle: 'Caption title 6',\n      captionDescription: 'Caption description 6'\n    },\n    {\n      id: 7,\n      href: '#',\n      imgSrc: 'https://picsum.photos/id/243/1280',\n      alt: 'Image description 7',\n      captionHref: '#',\n      captionTitle: 'Caption title 7',\n      captionDescription: 'Caption description 7'\n    },\n    {\n      id: 8,\n      href: '#',\n      imgSrc: 'https://picsum.photos/id/244/1280',\n      alt: 'Image description 8',\n      captionHref: '#',\n      captionTitle: 'Caption title 8',\n      captionDescription: 'Caption description 8'\n    },\n  ];\n  isAutoPlayOn?: boolean;\n  selectedSlide?: SlideInterface;\n  // If operating system preferences have been set for reduced motion or disabling animations, the auto-rotation is initially paused.\n  isPause = new BehaviorSubject<boolean>(false);\n  pauseButtonLabel!: string;\n  // This subject will emit when the component is destroyed.\n  private destroy$ = new Subject<void>();\n\n  constructor() {\n    // If operating system preferences have been set for reduced motion or disabling animations, the auto-rotation is initially paused.\n    // isPause = false;\n  }\n\n  ngOnInit(): void {\n      this.handlePauseButtonLabel(this.isPause.value)\n      this.isPause.subscribe((isPause) => {\n        this.handlePauseButtonLabel(isPause);\n      }\n    );\n    this.selectedSlide = this.carouselItems[0]\n    this.isPause\n      .pipe(\n        switchMap(isPause =>\n          isPause ? new Subject<void>() : timer(5000).pipe(switchMap(() => {\n            this.selectedSlide = this.nextSlide();\n            return new Subject<void>(); // Return a non-emitting observable after updating the slide.\n          }))\n        ),\n        takeUntil(this.destroy$) // Ensure we unsubscribe when the component is destroyed.\n      )\n      .subscribe();\n    }\n\n    nextSlide(){\n      const index = this.carouselItems.findIndex((slide) => slide.id === this.selectedSlide?.id);\n      const nextSlide = this.carouselItems[index + 1];\n      return nextSlide ? nextSlide : this.carouselItems[0];\n\n    }\n  handlePauseButtonLabel(isPause: boolean) {\n    this.pauseButtonLabel = isPause ? 'End Automatic slide show' : 'Start Automatic slide show';\n  }\n\n  handleSlidesAnnouncement(): 'off' | \"polite\" {\n    return this.isAutoPlayOn ? 'off' : 'polite';\n  }\n\n  activate() {\n    // activate the slide\n  }\n\n  getIdRef(id: SlideInterface['id']) {\n    return 'carousel-item-' + id;\n  }\n\n  handleSlideTabClick(e: MouseEvent, slideTabElement: HTMLElement, slide: SlideInterface) {\n    e.preventDefault();\n    this.selectedSlide = slide;\n    this.isAutoPlayOn = false;\n    console.log(e);\n    console.log(this.selectedSlide);\n    console.log(slideTabElement);\n    slideTabElement.focus();\n  }\n\n  ngOnDestroy(): void {\n    // Emit a value when the component is destroyed.\n    this.destroy$.next();\n    this.destroy$.complete();\n  }\n}\n",
             "properties": [
                 {
                     "name": "alt",
@@ -2487,7 +2487,7 @@
         },
         {
             "name": "TabsComponent",
-            "id": "component-TabsComponent-e7c4feb95061d82141bfcd2162192426cd8fa768ea5e0800a3dee0fb45bca9c14c34a9e03648324bfffb9e51c4d17e3ade3434b4b3df5025662c38928023e169",
+            "id": "component-TabsComponent-66c979e104e142e596903639106b47bb5c7db13ab676d7078f8371d8a1dc2815e40f94c9125bd8fdbd551cb2ad111d49de6d1606de99e898d67ab65c2fa68996",
             "file": "src/app/carousel/tabs/tabs.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -2509,7 +2509,7 @@
             "propertiesClass": [
                 {
                     "name": "carouselItems",
-                    "defaultValue": "[{\n    id: 1,\n    href: '#',\n    imgSrc: 'https://picsum.photos/id/237/200/300',\n    alt: 'Image description 1',\n    captionHref: '#',\n    captionTitle: 'Caption title 1',\n    captionDescription: 'Caption description 1'\n  }, // ... Add other carousel items here\n  ]",
+                    "defaultValue": "[\n    {\n    id: 1,\n    href: '#',\n    imgSrc: 'https://picsum.photos/id/237/1280',\n    alt: 'Image description 1',\n    captionHref: '#',\n    captionTitle: 'Caption title 1',\n    captionDescription: 'Caption description 1'\n  },\n    {\n      id: 2,\n      href: '#',\n      imgSrc: 'https://picsum.photos/id/238/1280',\n      alt: 'Image description 2',\n      captionHref: '#',\n      captionTitle: 'Caption title 2',\n      captionDescription: 'Caption description 2'\n    },\n    {\n      id: 3,\n      href: '#',\n      imgSrc: 'https://picsum.photos/id/239/1280',\n      alt: 'Image description 3',\n      captionHref: '#',\n      captionTitle: 'Caption title 3',\n      captionDescription: 'Caption description 3'\n    },\n    {\n      id: 4,\n      href: '#',\n      imgSrc: 'https://picsum.photos/id/240/1280',\n      alt: 'Image description 4',\n      captionHref: '#',\n      captionTitle: 'Caption title 4',\n      captionDescription: 'Caption description 4'\n    },\n    {\n      id: 5,\n      href: '#',\n      imgSrc: 'https://picsum.photos/id/241/1280',\n      alt: 'Image description 5',\n      captionHref: '#',\n      captionTitle: 'Caption title 5',\n      captionDescription: 'Caption description 5'\n    },\n    {\n      id: 6,\n      href: '#',\n      imgSrc: 'https://picsum.photos/id/242/1280',\n      alt: 'Image description 6',\n      captionHref: '#',\n      captionTitle: 'Caption title 6',\n      captionDescription: 'Caption description 6'\n    },\n    {\n      id: 7,\n      href: '#',\n      imgSrc: 'https://picsum.photos/id/243/1280',\n      alt: 'Image description 7',\n      captionHref: '#',\n      captionTitle: 'Caption title 7',\n      captionDescription: 'Caption description 7'\n    },\n    {\n      id: 8,\n      href: '#',\n      imgSrc: 'https://picsum.photos/id/244/1280',\n      alt: 'Image description 8',\n      captionHref: '#',\n      captionTitle: 'Caption title 8',\n      captionDescription: 'Caption description 8'\n    },\n  ]",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "SlideInterface[]",
@@ -2518,13 +2518,26 @@
                     "line": 18
                 },
                 {
+                    "name": "destroy$",
+                    "defaultValue": "new Subject<void>()",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 98,
+                    "modifierKind": [
+                        121
+                    ]
+                },
+                {
                     "name": "isAutoPlayOn",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "boolean",
                     "optional": true,
                     "description": "",
-                    "line": 28
+                    "line": 92
                 },
                 {
                     "name": "isPause",
@@ -2534,7 +2547,7 @@
                     "type": "",
                     "optional": false,
                     "description": "",
-                    "line": 31
+                    "line": 95
                 },
                 {
                     "name": "pauseButtonLabel",
@@ -2543,7 +2556,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 32
+                    "line": 96
                 },
                 {
                     "name": "selectedSlide",
@@ -2552,7 +2565,7 @@
                     "type": "SlideInterface",
                     "optional": true,
                     "description": "",
-                    "line": 29
+                    "line": 93
                 }
             ],
             "methodsClass": [
@@ -2562,7 +2575,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 55,
+                    "line": 139,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -2579,7 +2592,7 @@
                     "optional": false,
                     "returnType": "string",
                     "typeParameters": [],
-                    "line": 59,
+                    "line": 143,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -2607,7 +2620,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 47,
+                    "line": 131,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -2628,7 +2641,85 @@
                     "optional": false,
                     "returnType": "\"off\" | \"polite\"",
                     "typeParameters": [],
-                    "line": 51,
+                    "line": 135,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "handleSlideTabClick",
+                    "args": [
+                        {
+                            "name": "e",
+                            "type": "MouseEvent",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "slideTabElement",
+                            "type": "HTMLElement",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "slide",
+                            "type": "SlideInterface",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 147,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "e",
+                            "type": "MouseEvent",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "slideTabElement",
+                            "type": "HTMLElement",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "slide",
+                            "type": "SlideInterface",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "nextSlide",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "any",
+                    "typeParameters": [],
+                    "line": 125,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "ngOnDestroy",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 157,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -2638,7 +2729,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 39,
+                    "line": 105,
                     "deprecated": false,
                     "deprecationMessage": ""
                 }
@@ -2652,7 +2743,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import {Component, OnInit} from '@angular/core';\nimport {BehaviorSubject} from \"rxjs\";\n\ninterface SlideInterface {\n  id: number,\n  href: string,\n  imgSrc: string,\n  alt: string,\n  captionHref: string,\n  captionTitle: string,\n  captionDescription: string\n}\n\n@Component({\n  selector: 'app-tabs', templateUrl: './tabs.component.html', styleUrls: ['./tabs.component.css']\n})\nexport class TabsComponent implements OnInit{\n  carouselItems: SlideInterface[] = [{\n    id: 1,\n    href: '#',\n    imgSrc: 'https://picsum.photos/id/237/200/300',\n    alt: 'Image description 1',\n    captionHref: '#',\n    captionTitle: 'Caption title 1',\n    captionDescription: 'Caption description 1'\n  }, // ... Add other carousel items here\n  ];\n  isAutoPlayOn?: boolean;\n  selectedSlide?: SlideInterface;\n  // If operating system preferences have been set for reduced motion or disabling animations, the auto-rotation is initially paused.\n  isPause = new BehaviorSubject<boolean>(false);\n  pauseButtonLabel!: string;\n\n  constructor() {\n    // If operating system preferences have been set for reduced motion or disabling animations, the auto-rotation is initially paused.\n    // isPause = false;\n  }\n\n  ngOnInit(): void {\n      this.handlePauseButtonLabel(this.isPause.value)\n      this.isPause.subscribe((isPause) => {\n        this.handlePauseButtonLabel(isPause);\n      }\n    );\n    }\n\n  handlePauseButtonLabel(isPause: boolean) {\n    this.pauseButtonLabel = isPause ? 'End Automatic slide show' : 'Start Automatic slide show';\n  }\n\n  handleSlidesAnnouncement(): 'off' | \"polite\" {\n    return this.isAutoPlayOn ? 'off' : 'polite';\n  }\n\n  activate() {\n    // activate the slide\n  }\n\n  getIdRef(id: SlideInterface['id']) {\n    return 'carousel-item-' + id;\n  }\n\n\n}\n",
+            "sourceCode": "import {Component, OnDestroy, OnInit} from '@angular/core';\nimport {BehaviorSubject, Subject, switchMap, takeUntil, timer} from \"rxjs\";\n\ninterface SlideInterface {\n  id: number,\n  href: string,\n  imgSrc: string,\n  alt: string,\n  captionHref: string,\n  captionTitle: string,\n  captionDescription: string\n}\n\n@Component({\n  selector: 'app-tabs', templateUrl: './tabs.component.html', styleUrls: ['./tabs.component.css']\n})\nexport class TabsComponent implements OnInit, OnDestroy{\n  carouselItems: SlideInterface[] = [\n    {\n    id: 1,\n    href: '#',\n    imgSrc: 'https://picsum.photos/id/237/1280',\n    alt: 'Image description 1',\n    captionHref: '#',\n    captionTitle: 'Caption title 1',\n    captionDescription: 'Caption description 1'\n  },\n    {\n      id: 2,\n      href: '#',\n      imgSrc: 'https://picsum.photos/id/238/1280',\n      alt: 'Image description 2',\n      captionHref: '#',\n      captionTitle: 'Caption title 2',\n      captionDescription: 'Caption description 2'\n    },\n    {\n      id: 3,\n      href: '#',\n      imgSrc: 'https://picsum.photos/id/239/1280',\n      alt: 'Image description 3',\n      captionHref: '#',\n      captionTitle: 'Caption title 3',\n      captionDescription: 'Caption description 3'\n    },\n    {\n      id: 4,\n      href: '#',\n      imgSrc: 'https://picsum.photos/id/240/1280',\n      alt: 'Image description 4',\n      captionHref: '#',\n      captionTitle: 'Caption title 4',\n      captionDescription: 'Caption description 4'\n    },\n    {\n      id: 5,\n      href: '#',\n      imgSrc: 'https://picsum.photos/id/241/1280',\n      alt: 'Image description 5',\n      captionHref: '#',\n      captionTitle: 'Caption title 5',\n      captionDescription: 'Caption description 5'\n    },\n    {\n      id: 6,\n      href: '#',\n      imgSrc: 'https://picsum.photos/id/242/1280',\n      alt: 'Image description 6',\n      captionHref: '#',\n      captionTitle: 'Caption title 6',\n      captionDescription: 'Caption description 6'\n    },\n    {\n      id: 7,\n      href: '#',\n      imgSrc: 'https://picsum.photos/id/243/1280',\n      alt: 'Image description 7',\n      captionHref: '#',\n      captionTitle: 'Caption title 7',\n      captionDescription: 'Caption description 7'\n    },\n    {\n      id: 8,\n      href: '#',\n      imgSrc: 'https://picsum.photos/id/244/1280',\n      alt: 'Image description 8',\n      captionHref: '#',\n      captionTitle: 'Caption title 8',\n      captionDescription: 'Caption description 8'\n    },\n  ];\n  isAutoPlayOn?: boolean;\n  selectedSlide?: SlideInterface;\n  // If operating system preferences have been set for reduced motion or disabling animations, the auto-rotation is initially paused.\n  isPause = new BehaviorSubject<boolean>(false);\n  pauseButtonLabel!: string;\n  // This subject will emit when the component is destroyed.\n  private destroy$ = new Subject<void>();\n\n  constructor() {\n    // If operating system preferences have been set for reduced motion or disabling animations, the auto-rotation is initially paused.\n    // isPause = false;\n  }\n\n  ngOnInit(): void {\n      this.handlePauseButtonLabel(this.isPause.value)\n      this.isPause.subscribe((isPause) => {\n        this.handlePauseButtonLabel(isPause);\n      }\n    );\n    this.selectedSlide = this.carouselItems[0]\n    this.isPause\n      .pipe(\n        switchMap(isPause =>\n          isPause ? new Subject<void>() : timer(5000).pipe(switchMap(() => {\n            this.selectedSlide = this.nextSlide();\n            return new Subject<void>(); // Return a non-emitting observable after updating the slide.\n          }))\n        ),\n        takeUntil(this.destroy$) // Ensure we unsubscribe when the component is destroyed.\n      )\n      .subscribe();\n    }\n\n    nextSlide(){\n      const index = this.carouselItems.findIndex((slide) => slide.id === this.selectedSlide?.id);\n      const nextSlide = this.carouselItems[index + 1];\n      return nextSlide ? nextSlide : this.carouselItems[0];\n\n    }\n  handlePauseButtonLabel(isPause: boolean) {\n    this.pauseButtonLabel = isPause ? 'End Automatic slide show' : 'Start Automatic slide show';\n  }\n\n  handleSlidesAnnouncement(): 'off' | \"polite\" {\n    return this.isAutoPlayOn ? 'off' : 'polite';\n  }\n\n  activate() {\n    // activate the slide\n  }\n\n  getIdRef(id: SlideInterface['id']) {\n    return 'carousel-item-' + id;\n  }\n\n  handleSlideTabClick(e: MouseEvent, slideTabElement: HTMLElement, slide: SlideInterface) {\n    e.preventDefault();\n    this.selectedSlide = slide;\n    this.isAutoPlayOn = false;\n    console.log(e);\n    console.log(this.selectedSlide);\n    console.log(slideTabElement);\n    slideTabElement.focus();\n  }\n\n  ngOnDestroy(): void {\n    // Emit a value when the component is destroyed.\n    this.destroy$.next();\n    this.destroy$.complete();\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -2667,12 +2758,13 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "args": [],
-                "line": 32
+                "line": 98
             },
             "implements": [
-                "OnInit"
+                "OnInit",
+                "OnDestroy"
             ],
-            "templateData": "<section aria-label=\"Highlighted Attractions\" aria-roledescription=\"carousel\"  >\n  <div class=\"controls\">\n    <button [ngClass]=\"{'pause' : isPause, 'play': !isPause}\"\n            class=\"rotation\"\n            (click)=\"isPause.next(!isPause.value)\"\n            type=\"button\">\n      <span class=\"sr-only\">\n        {{pauseButtonLabel}}\n      </span>\n      <svg class=\"svg-play\" height=\"34\" version=\"1.1\" width=\"42\" xmlns=\"http://www.w3.org/2000/svg\">\n        <title></title>\n        <rect class=\"background\" height=\"24\" rx=\"5\" ry=\"5\" width=\"38\" x=\"2\" y=\"2\"></rect>\n        <rect class=\"border\" height=\"20\" rx=\"5\" ry=\"5\" width=\"34\" x=\"4\" y=\"4\"></rect>\n        <polygon class=\"pause\" points=\"17 8 17 20\"></polygon>\n        <polygon class=\"pause\" points=\"24 8 24 20\"></polygon>\n        <polygon class=\"play\" points=\"15 8 15 20 27 14\"></polygon>\n      </svg>\n    </button>\n    <div class=\"tab-wrapper\">\n      <div aria-label=\"Slides\">\n        <button (focus)=\"activate()\"\n                *ngFor=\"let slide of carouselItems\"\n                aria-controls=\"{{getIdRef(slide.id)}}\"\n                aria-label=\"Slide X\"\n                aria-selected=\"false\"\n                tabindex=\"-1\">\n          <svg height=\"34\" version=\"1.1\" width=\"34\" xmlns=\"http://www.w3.org/2000/svg\">\n            <circle class=\"border\" cx=\"16\" cy=\"15\" r=\"10\"></circle>\n            <circle class=\"tab-background\" cx=\"16\" cy=\"15\" r=\"8\"></circle>\n            <circle class=\"tab\" cx=\"16\" cy=\"15\" r=\"6\"></circle>\n          </svg>\n        </button>\n      </div>\n    </div>\n  </div>\n\n  <!--  where all the slides live on-->\n  <!--  e.g., \"Slide 1 of 6\"-->\n  <div [attr.aria-live]=\"handleSlidesAnnouncement()\" aria-label=\"x of Y\" aria-roledescription=\"slide\">\n    <!--slide content goes here-->\n  </div>\n</section>\n"
+            "templateData": "<section (mouseenter)=\"isPause.next(true)\"\n         class=\"relative\"\n         aria-label=\"Highlighted Attractions\"\n         aria-roledescription=\"carousel\">\n  <div class=\"absolute top-0 z-10 w-full p-5 grid gap-3 justify-items-end sm:justify-items-start sm:gap-0 sm:grid-flow-col \" id=\"controls\">\n    <button (click)=\"isPause.next(true)\"\n            [ngClass]=\"{'pause' : isPause.value, 'play': !isPause.value}\"\n            class=\"rotation flex justify-center items-center bg-black bg-opacity-60 rounded-md w-9 h-9 shadow-lg focus:outline-black focus:border-blue-400\"\n            type=\"button\">\n      <span class=\"sr-only\">\n        {{pauseButtonLabel}}\n      </span>\n      <svg class=\"w-6 h-6\" fill=\"white\" stroke=\"white\" viewBox=\"0 0 24 24\">\n        <path *ngIf=\"isPause.value\" d=\"M6 4h4v16H6zM14 4h4v16h-4z\" stroke-linecap=\"round\" stroke-linejoin=\"round\"\n              stroke-width=\"2\"></path>\n        <path *ngIf=\"!isPause.value\" d=\"M18 12L6 4v16l12-8z\" stroke-linecap=\"round\" stroke-linejoin=\"round\"\n              stroke-width=\"2\"></path>\n      </svg>\n    </button>\n    <div class=\"w-100 flex center justify-content-center vw-100\">\n      <div aria-label=\"Slides\"\n           class=\"tab-wrapper bg-black bg-opacity-60 rounded-full grid py-3 sm: py-0 sm:flex sm:px-3\">\n        <button #slideTab\n                (click)=\"handleSlideTabClick($event, slideTab ,slide)\"\n                (focus)=\"activate()\"\n                *ngFor=\"let slide of carouselItems\"\n                [attr.tabindex]=\"-1\"\n                aria-controls=\"{{getIdRef(slide.id)}}\"\n                aria-label=\"Slide X\"\n                aria-selected=\"false\"\n                class=\"hover:fill-blue-600\">\n           <span class=\"sr-only\">\n            {{slide.captionTitle}}\n          </span>\n          <svg height=\"34\" version=\"1.1\" width=\"34\" xmlns=\"http://www.w3.org/2000/svg\">\n            <circle class=\"border stroke-white fill-white\" cx=\"16\" cy=\"15\" r=\"10\"></circle>\n            <circle class=\"tab-background\" cx=\"16\" cy=\"15\" r=\"8\"></circle>\n            <circle\n              class=\"tab\"\n              cx=\"16\"\n              cy=\"15\"\n              r=\"6\"></circle>\n          </svg>\n        </button>\n      </div>\n    </div>\n  </div>\n\n  <!--  where all the slides live on-->\n  <!--  e.g., \"Slide 1 of 6\"-->\n  <div [attr.aria-live]=\"handleSlidesAnnouncement()\" aria-label=\"x of Y\" aria-roledescription=\"slide\">\n    <!--slide content goes here-->\n    <div *ngFor=\"let slide of carouselItems; let i = index\"\n         [ngClass]=\"{'hidden': selectedSlide != slide}\"\n         class=\"max-h-400 max-w-900 relative overflow-hidden w-full\"\n         aria-roledescription=\"slide\"\n         attr.aria-label=\"{{i + 1}} of {{carouselItems.length}}\"\n         id=\"carousel-item-{{i + 1}}\"\n         role=\"tabpanel\">\n      <div id=\"carousel-img\">\n        <a href=\"{{slide.href}}\" id=\"carousel-img-{{i +1}}\">\n          <figure class=\"relative flex justify-center\">\n            <img src=\"{{slide.imgSrc}}\" alt=\"{{slide.alt}}\">\n            <figcaption class=\"absolute bottom-0 left-[15%] right-[15%] text-white text-center py-5 grid gap-2 justify-items-center\">\n              <h3 class=\"text-2xl font-bold bg-opacity-60 bg-black rounded-md p-2\">{{slide.captionTitle}}</h3>\n              <p class=\"text-lg bg-opacity-60 bg-black rounded-md p-2\">{{slide.captionDescription}}</p>\n            </figcaption>\n          </figure>\n        </a>\n      </div>\n\n    </div>\n  </div>\n</section>\n"
         }
     ],
     "modules": [
@@ -2765,16 +2857,6 @@
                 "name": "CloseWithButton",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/dialogs/modal/modal.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  args: {\n  },\n  render: (args: Modal) => ({\n    props: {\n      ...args,\n      isOpen: false,\n    },\n    template: `\n      <button #button (click)=\"isOpen = !isOpen\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Toggle\n      Dialog\n    </button>\n      <app-dialog *ngIf=\"isOpen\" [previousFocusElement]=\"button\" (onClose)=\"isOpen = false\">\n        <div header>Some content</div>\n        <div body>\n          <p>Some more content</p>\n          <button class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Button that clicks</button>\n        </div>\n      </app-dialog>\n    `,\n  }),\n}"
-            },
-            {
-                "name": "CloseWithButton",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/dialogs/modernDialog/modern-dialog.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -2785,11 +2867,31 @@
                 "name": "CloseWithButton",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/dialogs/modal/modal.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n  },\n  render: (args: Modal) => ({\n    props: {\n      ...args,\n      isOpen: false,\n    },\n    template: `\n      <button #button (click)=\"isOpen = !isOpen\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Toggle\n      Dialog\n    </button>\n      <app-dialog *ngIf=\"isOpen\" [previousFocusElement]=\"button\" (onClose)=\"isOpen = false\">\n        <div header>Some content</div>\n        <div body>\n          <p>Some more content</p>\n          <button class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Button that clicks</button>\n        </div>\n      </app-dialog>\n    `,\n  }),\n}"
+            },
+            {
+                "name": "CloseWithButton",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/dialogs/modernDialogWrap/modern-dialog-wrap.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  args: {\n  },\n  render: (args: ModernDialogWrapComponent) => ({\n    props: {\n      ...args,\n      isOpen: false,\n    },\n    template: `\n      <button #button (click)=\"isOpen = !isOpen\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Toggle\n      Dialog\n    </button>\n      <app-dialog *ngIf=\"isOpen\" [previousFocusElement]=\"button\" (onClose)=\"isOpen = false\">\n        <div header>Some content</div>\n        <div body>\n          <p>Some more content</p>\n          <button class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Button that clicks</button>\n        </div>\n      </app-dialog>\n    `,\n  }),\n}"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/carousel/tabs/tabs.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n  },\n  render: (args: TabsComponent) => ({\n    props: {\n      ...args,\n    },\n    template: `\n      <app-tabs></app-tabs>\n    `,\n  }),\n}"
             },
             {
                 "name": "Default",
@@ -2815,16 +2917,6 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/dialogs/modal/modal.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  args: {\n  },\n  render: (args: Modal) => ({\n    props: {\n      ...args,\n      isOpen: true,\n    },\n    template: `\n      <app-dialog *ngIf=\"isOpen\" (onClose)=\"isOpen = false\">\n        <div header>Some content</div>\n        <div body>\n          <p>Some more content</p>\n          <button class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Button that clicks</button>\n        </div>\n      </app-dialog>\n    `,\n  }),\n}"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/dialogs/modernDialog/modern-dialog.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -2835,21 +2927,21 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/dialogs/modernDialogWrap/modern-dialog-wrap.stories.ts",
+                "file": "src/app/dialogs/modal/modal.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: {\n  },\n  render: (args: ModernDialogWrapComponent) => ({\n    props: {\n      ...args,\n      isOpen: true,\n    },\n    template: `\n      <app-dialog *ngIf=\"isOpen\" (onClose)=\"isOpen = false\">\n        <div header>Some content</div>\n        <div body>\n          <p>Some more content</p>\n          <button class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Button that clicks</button>\n        </div>\n      </app-dialog>\n    `,\n  }),\n}"
+                "defaultValue": "{\n  args: {\n  },\n  render: (args: Modal) => ({\n    props: {\n      ...args,\n      isOpen: true,\n    },\n    template: `\n      <app-dialog *ngIf=\"isOpen\" (onClose)=\"isOpen = false\">\n        <div header>Some content</div>\n        <div body>\n          <p>Some more content</p>\n          <button class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Button that clicks</button>\n        </div>\n      </app-dialog>\n    `,\n  }),\n}"
             },
             {
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/carousel/tabs/tabs.stories.ts",
+                "file": "src/app/dialogs/modernDialogWrap/modern-dialog-wrap.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: {\n  },\n  render: (args: TabsComponent) => ({\n    props: {\n      ...args,\n    },\n    template: `\n      <app-tabs></app-tabs>\n    `,\n  }),\n}"
+                "defaultValue": "{\n  args: {\n  },\n  render: (args: ModernDialogWrapComponent) => ({\n    props: {\n      ...args,\n      isOpen: true,\n    },\n    template: `\n      <app-dialog *ngIf=\"isOpen\" (onClose)=\"isOpen = false\">\n        <div header>Some content</div>\n        <div body>\n          <p>Some more content</p>\n          <button class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Button that clicks</button>\n        </div>\n      </app-dialog>\n    `,\n  }),\n}"
             },
             {
                 "name": "DialogUpdates",
@@ -2875,21 +2967,21 @@
                 "name": "DialogUpdates",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/dialogs/modal/modal.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  args: {\n  },\n  render: (args: Modal) => ({\n    props: {\n      ...args,\n      isOpen: true,\n      updateDialog: false,\n    },\n    template: `\n      <button #button (click)=\"isOpen = !isOpen\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Toggle\n      Dialog\n    </button>\n      <app-dialog *ngIf=\"isOpen\" [previousFocusElement]=\"button\" (onClose)=\"isOpen = false\">\n        <div header *ngIf=\"!updateDialog\">Some content</div>\n        <div body *ngIf=\"!updateDialog\">\n          <p>Some more content</p>\n          <button (click)=\"updateDialog = true\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Activate changes</button>\n        </div>\n\n        <div header *ngIf=\"updateDialog\">Secondary Content Updated</div>\n        <div body *ngIf=\"updateDialog\">\n          <p>Updated content</p>\n          <button (click)=\"updateDialog = false\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Revert Changes</button>\n        </div>\n      </app-dialog>\n    `,\n  }),\n}"
-            },
-            {
-                "name": "DialogUpdates",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/dialogs/modernDialog/modern-dialog.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  args: {\n  },\n  render: (args: ModernDialogComponent) => ({\n    props: {\n      ...args,\n      isOpen: true,\n      updateDialog: false,\n    },\n    template: `\n      <button #button (click)=\"isOpen = !isOpen\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Toggle\n      Dialog\n    </button>\n      <app-dialog *ngIf=\"isOpen\" [previousFocusElement]=\"button\" (onClose)=\"isOpen = false\">\n        <div header *ngIf=\"!updateDialog\">Some content</div>\n        <div body *ngIf=\"!updateDialog\">\n          <p>Some more content</p>\n          <button (click)=\"updateDialog = true\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Activate changes</button>\n        </div>\n\n        <div header *ngIf=\"updateDialog\">Secondary Content Updated</div>\n        <div body *ngIf=\"updateDialog\">\n          <p>Updated content</p>\n          <button (click)=\"updateDialog = false\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Revert Changes</button>\n        </div>\n      </app-dialog>\n    `,\n  }),\n}"
+            },
+            {
+                "name": "DialogUpdates",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/dialogs/modal/modal.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n  },\n  render: (args: Modal) => ({\n    props: {\n      ...args,\n      isOpen: true,\n      updateDialog: false,\n    },\n    template: `\n      <button #button (click)=\"isOpen = !isOpen\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Toggle\n      Dialog\n    </button>\n      <app-dialog *ngIf=\"isOpen\" [previousFocusElement]=\"button\" (onClose)=\"isOpen = false\">\n        <div header *ngIf=\"!updateDialog\">Some content</div>\n        <div body *ngIf=\"!updateDialog\">\n          <p>Some more content</p>\n          <button (click)=\"updateDialog = true\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Activate changes</button>\n        </div>\n\n        <div header *ngIf=\"updateDialog\">Secondary Content Updated</div>\n        <div body *ngIf=\"updateDialog\">\n          <p>Updated content</p>\n          <button (click)=\"updateDialog = false\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Revert Changes</button>\n        </div>\n      </app-dialog>\n    `,\n  }),\n}"
             },
             {
                 "name": "DialogUpdates",
@@ -2985,6 +3077,16 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/carousel/tabs/tabs.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<TabsComponent>",
+                "defaultValue": "{\n  title: 'Components/Caurousel/Tabs',\n  component: TabsComponent,\n  tags: ['autodocs'],\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/dialogs/dialog/dialog.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -3005,16 +3107,6 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/dialogs/modal/modal.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<Modal>",
-                "defaultValue": "{\n  title: 'Components/Modal',\n  component: Modal,\n  tags: ['autodocs'],\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/dialogs/modernDialog/modern-dialog.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -3025,21 +3117,21 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/dialogs/modernDialogWrap/modern-dialog-wrap.stories.ts",
+                "file": "src/app/dialogs/modal/modal.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "Meta<ModernDialogWrapComponent>",
-                "defaultValue": "{\n  title: 'Components/Modal with Wrap',\n  component: ModernDialogWrapComponent,\n  tags: ['autodocs'],\n}"
+                "type": "Meta<Modal>",
+                "defaultValue": "{\n  title: 'Components/Modal',\n  component: Modal,\n  tags: ['autodocs'],\n}"
             },
             {
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/carousel/tabs/tabs.stories.ts",
+                "file": "src/app/dialogs/modernDialogWrap/modern-dialog-wrap.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "Meta<TabsComponent>",
-                "defaultValue": "{\n  title: 'Components/Caurousel/Tabs',\n  component: TabsComponent,\n  tags: ['autodocs'],\n}"
+                "type": "Meta<ModernDialogWrapComponent>",
+                "defaultValue": "{\n  title: 'Components/Modal with Wrap',\n  component: ModernDialogWrapComponent,\n  tags: ['autodocs'],\n}"
             },
             {
                 "name": "OpenWithButton",
@@ -3065,21 +3157,21 @@
                 "name": "OpenWithButton",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/dialogs/modal/modal.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n  args: {\n  },\n  render: (args: Modal) => ({\n    props: {\n      ...args,\n      isOpen: true,\n    },\n    template: `\n      <button #button (click)=\"isOpen = !isOpen\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Toggle\n      Dialog\n    </button>\n      <app-dialog *ngIf=\"isOpen\" [previousFocusElement]=\"button\" (onClose)=\"isOpen = false\">\n        <div header>Some content</div>\n        <div body>\n          <p>Some more content</p>\n          <button class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Button that clicks</button>\n        </div>\n      </app-dialog>\n    `,\n  }),\n}"
-            },
-            {
-                "name": "OpenWithButton",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/dialogs/modernDialog/modern-dialog.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n  args: {\n  },\n  render: (args: ModernDialogComponent) => ({\n    props: {\n      ...args,\n      isOpen: true,\n    },\n    template: `\n      <button #button (click)=\"isOpen = !isOpen\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Toggle\n      Dialog\n    </button>\n      <app-dialog *ngIf=\"isOpen\" [previousFocusElement]=\"button\" (onClose)=\"isOpen = false\">\n        <div header>Some content</div>\n        <div body>\n          <p>Some more content</p>\n          <button class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Button that clicks</button>\n        </div>\n      </app-dialog>\n    `,\n  }),\n}"
+            },
+            {
+                "name": "OpenWithButton",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/dialogs/modal/modal.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n  },\n  render: (args: Modal) => ({\n    props: {\n      ...args,\n      isOpen: true,\n    },\n    template: `\n      <button #button (click)=\"isOpen = !isOpen\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Toggle\n      Dialog\n    </button>\n      <app-dialog *ngIf=\"isOpen\" [previousFocusElement]=\"button\" (onClose)=\"isOpen = false\">\n        <div header>Some content</div>\n        <div body>\n          <p>Some more content</p>\n          <button class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Button that clicks</button>\n        </div>\n      </app-dialog>\n    `,\n  }),\n}"
             },
             {
                 "name": "OpenWithButton",
@@ -3181,6 +3273,17 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
+                "rawtype": "StoryObj<TabsComponent>",
+                "file": "src/app/carousel/tabs/tabs.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 180
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
                 "rawtype": "StoryObj<DialogComponent>",
                 "file": "src/app/dialogs/dialog/dialog.stories.ts",
                 "deprecated": false,
@@ -3203,17 +3306,6 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<Modal>",
-                "file": "src/app/dialogs/modal/modal.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "",
-                "kind": 180
-            },
-            {
-                "name": "Story",
-                "ctype": "miscellaneous",
-                "subtype": "typealias",
                 "rawtype": "StoryObj<ModernDialogComponent>",
                 "file": "src/app/dialogs/modernDialog/modern-dialog.stories.ts",
                 "deprecated": false,
@@ -3225,8 +3317,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<ModernDialogWrapComponent>",
-                "file": "src/app/dialogs/modernDialogWrap/modern-dialog-wrap.stories.ts",
+                "rawtype": "StoryObj<Modal>",
+                "file": "src/app/dialogs/modal/modal.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -3236,8 +3328,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<TabsComponent>",
-                "file": "src/app/carousel/tabs/tabs.stories.ts",
+                "rawtype": "StoryObj<ModernDialogWrapComponent>",
+                "file": "src/app/dialogs/modernDialogWrap/modern-dialog-wrap.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -3350,58 +3442,6 @@
                     "defaultValue": "{\n  args: {\n  },\n  render: (args: DialogWithLastFousAbleElementComponent) => ({\n    props: {\n      ...args,\n      isOpen: true,\n    },\n    template: `\n      <button #button (click)=\"isOpen = !isOpen\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Toggle\n      Dialog\n    </button>\n      <app-dialog *ngIf=\"isOpen\" [previousFocusElement]=\"button\" (onClose)=\"isOpen = false\">\n        <div header>Some content</div>\n        <div body>\n          <p>Some more content</p>\n          <button class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Button that clicks</button>\n        </div>\n      </app-dialog>\n    `,\n  }),\n}"
                 }
             ],
-            "src/app/dialogs/modal/modal.stories.ts": [
-                {
-                    "name": "CloseWithButton",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/dialogs/modal/modal.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: {\n  },\n  render: (args: Modal) => ({\n    props: {\n      ...args,\n      isOpen: false,\n    },\n    template: `\n      <button #button (click)=\"isOpen = !isOpen\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Toggle\n      Dialog\n    </button>\n      <app-dialog *ngIf=\"isOpen\" [previousFocusElement]=\"button\" (onClose)=\"isOpen = false\">\n        <div header>Some content</div>\n        <div body>\n          <p>Some more content</p>\n          <button class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Button that clicks</button>\n        </div>\n      </app-dialog>\n    `,\n  }),\n}"
-                },
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/dialogs/modal/modal.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: {\n  },\n  render: (args: Modal) => ({\n    props: {\n      ...args,\n      isOpen: true,\n    },\n    template: `\n      <app-dialog *ngIf=\"isOpen\" (onClose)=\"isOpen = false\">\n        <div header>Some content</div>\n        <div body>\n          <p>Some more content</p>\n          <button class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Button that clicks</button>\n        </div>\n      </app-dialog>\n    `,\n  }),\n}"
-                },
-                {
-                    "name": "DialogUpdates",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/dialogs/modal/modal.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: {\n  },\n  render: (args: Modal) => ({\n    props: {\n      ...args,\n      isOpen: true,\n      updateDialog: false,\n    },\n    template: `\n      <button #button (click)=\"isOpen = !isOpen\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Toggle\n      Dialog\n    </button>\n      <app-dialog *ngIf=\"isOpen\" [previousFocusElement]=\"button\" (onClose)=\"isOpen = false\">\n        <div header *ngIf=\"!updateDialog\">Some content</div>\n        <div body *ngIf=\"!updateDialog\">\n          <p>Some more content</p>\n          <button (click)=\"updateDialog = true\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Activate changes</button>\n        </div>\n\n        <div header *ngIf=\"updateDialog\">Secondary Content Updated</div>\n        <div body *ngIf=\"updateDialog\">\n          <p>Updated content</p>\n          <button (click)=\"updateDialog = false\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Revert Changes</button>\n        </div>\n      </app-dialog>\n    `,\n  }),\n}"
-                },
-                {
-                    "name": "meta",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/dialogs/modal/modal.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Meta<Modal>",
-                    "defaultValue": "{\n  title: 'Components/Modal',\n  component: Modal,\n  tags: ['autodocs'],\n}"
-                },
-                {
-                    "name": "OpenWithButton",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/dialogs/modal/modal.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\n  args: {\n  },\n  render: (args: Modal) => ({\n    props: {\n      ...args,\n      isOpen: true,\n    },\n    template: `\n      <button #button (click)=\"isOpen = !isOpen\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Toggle\n      Dialog\n    </button>\n      <app-dialog *ngIf=\"isOpen\" [previousFocusElement]=\"button\" (onClose)=\"isOpen = false\">\n        <div header>Some content</div>\n        <div body>\n          <p>Some more content</p>\n          <button class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Button that clicks</button>\n        </div>\n      </app-dialog>\n    `,\n  }),\n}"
-                }
-            ],
             "src/app/dialogs/modernDialog/modern-dialog.stories.ts": [
                 {
                     "name": "CloseWithButton",
@@ -3452,6 +3492,58 @@
                     "deprecationMessage": "",
                     "type": "Story",
                     "defaultValue": "{\n  args: {\n  },\n  render: (args: ModernDialogComponent) => ({\n    props: {\n      ...args,\n      isOpen: true,\n    },\n    template: `\n      <button #button (click)=\"isOpen = !isOpen\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Toggle\n      Dialog\n    </button>\n      <app-dialog *ngIf=\"isOpen\" [previousFocusElement]=\"button\" (onClose)=\"isOpen = false\">\n        <div header>Some content</div>\n        <div body>\n          <p>Some more content</p>\n          <button class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Button that clicks</button>\n        </div>\n      </app-dialog>\n    `,\n  }),\n}"
+                }
+            ],
+            "src/app/dialogs/modal/modal.stories.ts": [
+                {
+                    "name": "CloseWithButton",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/dialogs/modal/modal.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n  },\n  render: (args: Modal) => ({\n    props: {\n      ...args,\n      isOpen: false,\n    },\n    template: `\n      <button #button (click)=\"isOpen = !isOpen\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Toggle\n      Dialog\n    </button>\n      <app-dialog *ngIf=\"isOpen\" [previousFocusElement]=\"button\" (onClose)=\"isOpen = false\">\n        <div header>Some content</div>\n        <div body>\n          <p>Some more content</p>\n          <button class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Button that clicks</button>\n        </div>\n      </app-dialog>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/dialogs/modal/modal.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n  },\n  render: (args: Modal) => ({\n    props: {\n      ...args,\n      isOpen: true,\n    },\n    template: `\n      <app-dialog *ngIf=\"isOpen\" (onClose)=\"isOpen = false\">\n        <div header>Some content</div>\n        <div body>\n          <p>Some more content</p>\n          <button class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Button that clicks</button>\n        </div>\n      </app-dialog>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "DialogUpdates",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/dialogs/modal/modal.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n  },\n  render: (args: Modal) => ({\n    props: {\n      ...args,\n      isOpen: true,\n      updateDialog: false,\n    },\n    template: `\n      <button #button (click)=\"isOpen = !isOpen\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Toggle\n      Dialog\n    </button>\n      <app-dialog *ngIf=\"isOpen\" [previousFocusElement]=\"button\" (onClose)=\"isOpen = false\">\n        <div header *ngIf=\"!updateDialog\">Some content</div>\n        <div body *ngIf=\"!updateDialog\">\n          <p>Some more content</p>\n          <button (click)=\"updateDialog = true\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Activate changes</button>\n        </div>\n\n        <div header *ngIf=\"updateDialog\">Secondary Content Updated</div>\n        <div body *ngIf=\"updateDialog\">\n          <p>Updated content</p>\n          <button (click)=\"updateDialog = false\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Revert Changes</button>\n        </div>\n      </app-dialog>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/dialogs/modal/modal.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<Modal>",
+                    "defaultValue": "{\n  title: 'Components/Modal',\n  component: Modal,\n  tags: ['autodocs'],\n}"
+                },
+                {
+                    "name": "OpenWithButton",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/dialogs/modal/modal.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n  },\n  render: (args: Modal) => ({\n    props: {\n      ...args,\n      isOpen: true,\n    },\n    template: `\n      <button #button (click)=\"isOpen = !isOpen\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Toggle\n      Dialog\n    </button>\n      <app-dialog *ngIf=\"isOpen\" [previousFocusElement]=\"button\" (onClose)=\"isOpen = false\">\n        <div header>Some content</div>\n        <div body>\n          <p>Some more content</p>\n          <button class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\">Button that clicks</button>\n        </div>\n      </app-dialog>\n    `,\n  }),\n}"
                 }
             ],
             "src/app/dialogs/modernDialogWrap/modern-dialog-wrap.stories.ts": [
@@ -3709,6 +3801,19 @@
                     "kind": 180
                 }
             ],
+            "src/app/carousel/tabs/tabs.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<TabsComponent>",
+                    "file": "src/app/carousel/tabs/tabs.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 180
+                }
+            ],
             "src/app/dialogs/dialog/dialog.stories.ts": [
                 {
                     "name": "Story",
@@ -3735,19 +3840,6 @@
                     "kind": 180
                 }
             ],
-            "src/app/dialogs/modal/modal.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<Modal>",
-                    "file": "src/app/dialogs/modal/modal.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 180
-                }
-            ],
             "src/app/dialogs/modernDialog/modern-dialog.stories.ts": [
                 {
                     "name": "Story",
@@ -3761,6 +3853,19 @@
                     "kind": 180
                 }
             ],
+            "src/app/dialogs/modal/modal.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<Modal>",
+                    "file": "src/app/dialogs/modal/modal.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 180
+                }
+            ],
             "src/app/dialogs/modernDialogWrap/modern-dialog-wrap.stories.ts": [
                 {
                     "name": "Story",
@@ -3768,19 +3873,6 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<ModernDialogWrapComponent>",
                     "file": "src/app/dialogs/modernDialogWrap/modern-dialog-wrap.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 180
-                }
-            ],
-            "src/app/carousel/tabs/tabs.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<TabsComponent>",
-                    "file": "src/app/carousel/tabs/tabs.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -3828,7 +3920,7 @@
                 "linktype": "component",
                 "name": "TabsComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/12",
+                "coverageCount": "0/16",
                 "status": "low"
             },
             {
